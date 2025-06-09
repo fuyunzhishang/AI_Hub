@@ -17,19 +17,21 @@ export const recognizeAudio = async (req, res) => {
     }
 
     const { file } = req;
-    console.log(`接收到语音识别请求，文件信息: 名称=${file.filename}, 类型=${file.mimetype}, 大小=${file.size}字节, 路径=${file.path}`);
-    
     const engineType = req.body.engineType || '16k_zh'; // 默认使用中文普通话识别引擎
-    console.log(`使用引擎类型: ${engineType}`);
+    
+    console.log(`[识别开始] 文件: ${file.originalname}, 大小: ${file.size} bytes, 引擎: ${engineType}`);
     
     // 检查文件是否存在
     if (!fs.existsSync(file.path)) {
-      console.error(`文件不存在: ${file.path}`);
+      console.error(`[识别失败] 文件不存在: ${file.path}`);
       return res.status(400).json({ error: '上传的文件无法访问' });
     }
     
     // 进行语音识别
     const result = await recognizeSpeech(file.path, engineType);
+    
+    console.log(`[识别成功] 文件: ${file.originalname}, 识别文本长度: ${result.text.length} 字符`);
+    
     return res.status(200).json({
       success: true,
       message: '语音识别成功',
@@ -47,8 +49,9 @@ export const recognizeAudio = async (req, res) => {
         requestId: result.result.RequestId || '',
         fullResult: result.result
       }
-    });  } catch (error) {
-    console.error('语音识别错误:', error);
+    });
+  } catch (error) {
+    console.error(`[识别失败] 文件: ${req.file?.originalname || '未知'}, 错误: ${error.message}`);
     return res.status(500).json({ 
       success: false,
       error: '语音识别过程中发生错误', 

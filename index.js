@@ -3,9 +3,12 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.js';
 import audioRoutes from './routes/audio.js';
 import speechRoutes from './routes/speech.js';
 import stsRoutes from './routes/sts.js';
+import googleFilesRoutes from './routes/googleFiles.js';
 import tencentcloud from "tencentcloud-sdk-nodejs";
 
 // 加载环境变量
@@ -27,11 +30,44 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 设置上传文件的目录为静态资源
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Swagger API 文档
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// 提供 OpenAPI 规范的 JSON 格式
+app.get('/api-docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
 // 路由设置
 app.use('/api/audio', audioRoutes);
 app.use('/api/speech', speechRoutes);
 app.use('/api/sts', stsRoutes);
+app.use('/api/google-files', googleFilesRoutes);
 
+/**
+ * @swagger
+ * /api/test:
+ *   get:
+ *     summary: 测试腾讯云API连接
+ *     tags: [测试]
+ *     responses:
+ *       200:
+ *         description: API连接正常
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 zones:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *       500:
+ *         description: API连接失败
+ */
 app.get('/api/test', async (req, res) => {
   const CvmClient = tencentcloud.cvm.v20170312.Client
   // 实例化要请求产品(以cvm为例)的client对象

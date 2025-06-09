@@ -40,13 +40,134 @@ const upload = multer({
   limits: { fileSize: 100 * 1024 * 1024 } // 限制文件大小为 100MB
 });
 
-// 音频转码路由
+/**
+ * @swagger
+ * /api/audio/transcode:
+ *   post:
+ *     summary: 音频转码
+ *     tags: [音频处理]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               audio:
+ *                 type: string
+ *                 format: binary
+ *                 description: 音频文件 (支持 wav, mp3, ogg, m4a, aac, flac)
+ *               format:
+ *                 type: string
+ *                 enum: [mp3, wav, ogg, m4a, aac, flac]
+ *                 default: mp3
+ *                 description: 输出格式
+ *               bitrate:
+ *                 type: string
+ *                 default: 128k
+ *                 description: 输出比特率
+ *             required:
+ *               - audio
+ *     responses:
+ *       200:
+ *         description: 转码成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     originalFile:
+ *                       type: string
+ *                     outputFile:
+ *                       type: string
+ *                     format:
+ *                       type: string
+ *                     bitrate:
+ *                       type: string
+ *                     url:
+ *                       type: string
+ *       400:
+ *         description: 请求错误
+ *       500:
+ *         description: 服务器错误
+ */
 router.post('/transcode', upload.single('audio'), transcodeAudio);
 
-// 音频数据提取路由
+/**
+ * @swagger
+ * /api/audio/extract:
+ *   post:
+ *     summary: 提取音频数据
+ *     tags: [音频处理]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               audio:
+ *                 type: string
+ *                 format: binary
+ *                 description: 音频文件 (支持 wav, mp3, ogg, m4a, aac, flac)
+ *               type:
+ *                 type: string
+ *                 enum: [all, metadata, waveform, spectrum]
+ *                 default: all
+ *                 description: 提取类型
+ *             required:
+ *               - audio
+ *     responses:
+ *       200:
+ *         description: 提取成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     metadata:
+ *                       type: object
+ *                       description: 音频元数据
+ *                     waveform:
+ *                       type: string
+ *                       description: 波形图URL
+ *                     spectrum:
+ *                       type: string
+ *                       description: 频谱图URL
+ *       400:
+ *         description: 请求错误
+ *       500:
+ *         description: 服务器错误
+ */
 router.post('/extract', upload.single('audio'), extractAudioData);
 
-// 获取已处理文件列表
+/**
+ * @swagger
+ * /api/audio/files:
+ *   get:
+ *     summary: 获取已处理文件列表
+ *     tags: [音频处理]
+ *     responses:
+ *       200:
+ *         description: 成功获取文件列表
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
 router.get('/files', (req, res) => {
   // 此路由后续实现
   res.status(200).json({ message: '文件列表功能将在后续实现' });
