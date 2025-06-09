@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import audioRoutes from './routes/audio.js';
 import speechRoutes from './routes/speech.js';
 import stsRoutes from './routes/sts.js';
+import credentialRoutes from './routes/credential.js';
 import tencentcloud from "tencentcloud-sdk-nodejs";
 
 // 加载环境变量
@@ -31,6 +32,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/audio', audioRoutes);
 app.use('/api/speech', speechRoutes);
 app.use('/api/sts', stsRoutes);
+app.use('/api/credential', credentialRoutes);
 
 app.get('/api/test', async (req, res) => {
   const CvmClient = tencentcloud.cvm.v20170312.Client
@@ -56,7 +58,7 @@ app.get('/api/test', async (req, res) => {
       },
     },
   })
-  
+
   try {
     // 使用await替代Promise链式调用
     const data = await client.DescribeZones();

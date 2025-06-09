@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { processTranscode, processExtract } from '../services/audioService.js';
+import { checkFFmpegInstallation, generateUserFriendlyError } from '../utils/ffmpegChecker.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,10 +20,10 @@ export const transcodeAudio = async (req, res) => {
     const { file } = req;
     const outputFormat = req.body.format || 'mp3'; // 默认转为 mp3
     const outputBitrate = req.body.bitrate || '128k'; // 默认比特率
-    
+
     // 处理音频转码
     const result = await processTranscode(file.path, outputFormat, outputBitrate);
-    
+
     return res.status(200).json({
       success: true,
       message: '音频转码成功',
@@ -40,9 +41,25 @@ export const transcodeAudio = async (req, res) => {
     });
   } catch (error) {
     console.error('音频转码错误:', error);
-    return res.status(500).json({ 
-      error: '音频转码过程中发生错误', 
-      details: error.message 
+
+    // 检查是否是 FFmpeg 相关错误
+    if (error.message.includes('FFmpeg') || error.message.includes('ffmpeg') ||
+      error.message.includes('不是内部或外部命令') || error.message.includes('command not found')) {
+
+      const ffmpegCheck = await checkFFmpegInstallation();
+      const friendlyError = generateUserFriendlyError(ffmpegCheck);
+
+      return res.status(500).json({
+        error: 'FFmpeg 未安装或配置错误',
+        details: friendlyError,
+        installationStatus: ffmpegCheck,
+        solution: '请安装 FFmpeg 后重试'
+      });
+    }
+
+    return res.status(500).json({
+      error: '音频转码过程中发生错误',
+      details: error.message
     });
   }
 };
@@ -59,10 +76,10 @@ export const extractAudioData = async (req, res) => {
 
     const { file } = req;
     const extractType = req.body.type || 'all'; // 提取类型：metadata, waveform, spectrum, all
-    
+
     // 处理音频数据提取
     const result = await processExtract(file.path, extractType);
-    
+
     return res.status(200).json({
       success: true,
       message: '音频数据提取成功',
@@ -75,9 +92,50 @@ export const extractAudioData = async (req, res) => {
     });
   } catch (error) {
     console.error('音频数据提取错误:', error);
-    return res.status(500).json({ 
-      error: '音频数据提取过程中发生错误', 
-      details: error.message 
+
+    // 检查是否是 FFmpeg 相关错误
+    if (error.message.includes('FFmpeg') || error.message.includes('ffmpeg') ||
+      error.message.includes('不是内部或外部命令') || error.message.includes('command not found')) {
+
+      const ffmpegCheck = await checkFFmpegInstallation();
+      const friendlyError = generateUserFriendlyError(ffmpegCheck);
+
+      return res.status(500).json({
+        error: 'FFmpeg 未安装或配置错误',
+        details: friendlyError,
+        installationStatus: ffmpegCheck,
+        solution: '请安装 FFmpeg 后重试'
+      });
+    }
+
+    return res.status(500).json({
+      error: '音频数据提取过程中发生错误',
+      details: error.message
+    });
+  }
+};
+
+/**
+ * 检查 FFmpeg 安装状态
+ */
+export const checkFFmpegStatus = async (req, res) => {
+  try {
+    const status = await checkFFmpegInstallation();
+
+    return res.status(200).json({
+      success: true,
+      message: 'FFmpeg 状态检查完成',
+      status,
+      userFriendlyMessage: status.overall.ready ?
+        'FFmpeg 已正确安装并可用' :
+        generateUserFriendlyError(status)
+    });
+  } catch (error) {
+    console.error('FFmpeg 状态检查错误:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'FFmpeg 状态检查失败',
+      details: error.message
     });
   }
 };

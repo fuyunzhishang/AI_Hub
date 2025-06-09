@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { transcodeAudio, extractAudioData } from '../controllers/audioController.js';
+import { transcodeAudio, extractAudioData, checkFFmpegStatus } from '../controllers/audioController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +25,7 @@ const fileFilter = (req, file, cb) => {
   const allowedTypes = /wav|mp3|ogg|m4a|aac|flac/;
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = allowedTypes.test(file.mimetype);
-  
+
   if (extname && mimetype) {
     return cb(null, true);
   } else {
@@ -34,7 +34,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 // 配置 multer
-const upload = multer({ 
+const upload = multer({
   storage,
   fileFilter,
   limits: { fileSize: 100 * 1024 * 1024 } // 限制文件大小为 100MB
@@ -45,6 +45,9 @@ router.post('/transcode', upload.single('audio'), transcodeAudio);
 
 // 音频数据提取路由
 router.post('/extract', upload.single('audio'), extractAudioData);
+
+// FFmpeg 状态检查路由
+router.get('/ffmpeg-status', checkFFmpegStatus);
 
 // 获取已处理文件列表
 router.get('/files', (req, res) => {
