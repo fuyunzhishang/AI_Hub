@@ -1,8 +1,14 @@
-# 使用 Node.js 20 LTS 版本
-FROM node:20-alpine
+# 多阶段构建 - 构建阶段
+FROM node:20-alpine AS builder
 
-# 安装 ffmpeg
-RUN apk add --no-cache ffmpeg
+# 安装构建依赖
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    gcc \
+    libc-dev \
+    linux-headers
 
 # 设置工作目录
 WORKDIR /app
@@ -10,14 +16,40 @@ WORKDIR /app
 # 复制 package.json 和 package-lock.json
 COPY package*.json ./
 
-# 安装生产依赖
-RUN npm ci --only=production
+# 安装所有依赖（包括开发依赖）
+RUN npm ci
 
 # 复制应用代码
 COPY . .
 
-# 创建必要的目录
-RUN mkdir -p uploads logs
+# 如果有构建步骤，在这里执行
+# RUN npm run build
+
+# 生产阶段
+FROM node:20-alpine
+
+# 只安装运行时依赖
+RUN apk add --no-cache ffmpeg
+
+# 创建非 root 用户
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# 设置工作目录
+WORKDIR /app
+
+# 从构建阶段复制 node_modules
+COPY --from=builder /app/node_modules ./node_modules
+
+# 复制应用代码
+COPY --chown=nodejs:nodejs . .
+
+# 创建必要的目录并设置权限
+RUN mkdir -p uploads logs && \
+    chown -R nodejs:nodejs uploads logs
+
+# 切换到非 root 用户
+USER nodejs
 
 # 设置环境变量
 ENV NODE_ENV=production
