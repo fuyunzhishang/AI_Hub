@@ -1,12 +1,18 @@
 {
-  "name": "aaaaa",
+  "name": "ai_hub",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "deploy": "bash deploy.sh",
+    "deploy:dry": "bash deploy.sh --dry-run",
+    "deploy:skip-deps": "bash deploy.sh --skip-deps",
+    "sync": "bash sync.sh",
+    "pm2:start": "pm2 start 'yarn start' --name ai_hub",
+    "pm2:restart": "pm2 restart ai_hub"
   },
   "author": "",
   "license": "ISC",
