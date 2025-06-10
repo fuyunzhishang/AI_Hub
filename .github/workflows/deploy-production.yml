@@ -186,17 +186,46 @@ jobs:
         script: |
           # 等待服务启动
           echo "等待服务启动..."
-          sleep 10
+          sleep 15
           
-          # 健康检查
+          # 检查 PM2 状态
+          echo "检查 PM2 状态..."
+          if command -v pm2 &> /dev/null; then
+            pm2 status
+          else
+            echo "警告：PM2 未安装"
+          fi
+          
+          # 健康检查（使用服务器本地地址）
           echo "执行健康检查..."
-          curl -f http://localhost:3099/api/test || {
-            echo "健康检查失败！"
-            pm2 logs ai-hub --lines 50
-            exit 1
-          }
+          HEALTH_URL="http://127.0.0.1:3099/api/test"
           
-          echo "健康检查通过！"
+          for i in {1..5}; do
+            if curl -f -s -o /dev/null -w "%{http_code}" $HEALTH_URL | grep -q "200"; then
+              echo "✅ 健康检查通过！"
+              exit 0
+            else
+              echo "等待服务响应... (尝试 $i/5)"
+              sleep 5
+            fi
+          done
+          
+          # 如果健康检查失败，显示日志
+          echo "❌ 健康检查失败！"
+          echo "尝试获取应用日志..."
+          
+          # 尝试不同方式获取日志
+          if command -v pm2 &> /dev/null; then
+            pm2 logs ai-hub --lines 50 --nostream || echo "无法获取 PM2 日志"
+          fi
+          
+          # 检查端口是否被监听
+          netstat -tlpn | grep :3099 || echo "端口 3099 未被监听"
+          
+          # 检查进程
+          ps aux | grep node | grep -v grep || echo "没有找到 Node.js 进程"
+          
+          exit 1
 
     # 获取最近的提交日志
     - name: Get Last Commit Log
