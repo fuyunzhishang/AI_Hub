@@ -71,38 +71,62 @@ app.use('/api/credential', credentialRoutes);
  *         description: API连接失败
  */
 app.get('/api/test', async (req, res) => {
-  const CvmClient = tencentcloud.cvm.v20170312.Client
-  // 实例化要请求产品(以cvm为例)的client对象
-  const client = new CvmClient({
-    // 从环境变量中获取密钥
-    credential: {
-      secretId: process.env.TENCENTCLOUD_SECRET_ID,
-      secretKey: process.env.TENCENTCLOUD_SECRET_KEY,
-    },
-    // 产品地域
-    region: "ap-shanghai",
-    // 可选配置实例
-    profile: {
-      signMethod: "TC3-HMAC-SHA256", // 签名方法
-      httpProfile: {
-        reqMethod: "POST", // 请求方法
-        reqTimeout: 30, // 请求超时时间，默认60s
-        headers: {
-          // 自定义 header
-        },
-        // proxy: "http://127.0.0.1:8899" // http请求代理
-      },
-    },
-  })
+  // 首先检查是否配置了腾讯云密钥
+  const secretId = process.env.TENCENTCLOUD_SECRET_ID;
+  const secretKey = process.env.TENCENTCLOUD_SECRET_KEY;
   
+  // 如果没有配置密钥或使用的是默认占位符，返回基础健康检查
+  if (!secretId || !secretKey || 
+      secretId === 'your_secret_id_here' || 
+      secretId === 'your_secret_id' ||
+      secretKey === 'your_secret_key_here' ||
+      secretKey === 'your_secret_key') {
+    return res.json({
+      status: 'ok',
+      message: 'Service is running (Tencent Cloud not configured)',
+      timestamp: new Date().toISOString(),
+      tencentCloudConfigured: false
+    });
+  }
+
+  // 如果配置了密钥，测试腾讯云连接
   try {
-    // 使用await替代Promise链式调用
+    const CvmClient = tencentcloud.cvm.v20170312.Client
+    // 实例化要请求产品(以cvm为例)的client对象
+    const client = new CvmClient({
+      credential: {
+        secretId: secretId,
+        secretKey: secretKey,
+      },
+      region: "ap-shanghai",
+      profile: {
+        signMethod: "TC3-HMAC-SHA256",
+        httpProfile: {
+          reqMethod: "POST",
+          reqTimeout: 30,
+        },
+      },
+    })
+    
     const data = await client.DescribeZones();
-    // 将API返回值作为JSON响应返回给客户端
-    res.json(data);
+    
+    res.json({
+      status: 'ok',
+      message: 'Service is running (Tencent Cloud connected)',
+      timestamp: new Date().toISOString(),
+      tencentCloudConfigured: true,
+      tencentCloudResponse: data
+    });
   } catch (err) {
-    console.error("error", err);
-    res.status(500).json({ error: err.message || '请求腾讯云API失败' });
+    console.error("Tencent Cloud API error:", err);
+    // 即使腾讯云连接失败，服务本身仍然是健康的
+    res.json({
+      status: 'ok',
+      message: 'Service is running (Tencent Cloud connection failed)',
+      timestamp: new Date().toISOString(),
+      tencentCloudConfigured: true,
+      tencentCloudError: err.message
+    });
   }
 });
 
