@@ -3,8 +3,6 @@ npm-debug.log
 .git
 .github
 .gitignore
-.env
-.env.example
 uploads/*
 logs/*
 *.log
