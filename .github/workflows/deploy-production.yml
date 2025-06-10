@@ -1,0 +1,232 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 检出代码
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 设置 Node.js 环境
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+
+    # 缓存依赖
+    - name: Cache Node Modules
+      id: cache-dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          **/node_modules
+        key: ${{ runner.OS }}-${{ hashFiles('**/package-lock.json') }}
+
+    # 安装依赖
+    - name: Install Dependencies
+      run: npm ci
+
+    # 运行测试（如果有）
+    - name: Run Tests
+      run: npm test || echo "No tests configured"
+
+    # 创建部署包
+    - name: Create Deployment Package
+      run: |
+        # 创建临时目录
+        rm -rf deploy_package
+        mkdir -p deploy_package
+        
+        # 复制必要文件（排除不需要的）
+        rsync -av \
+          --exclude='deploy_package' \
+          --exclude='node_modules' \
+          --exclude='.git' \
+          --exclude='.github' \
+          --exclude='uploads' \
+          --exclude='logs' \
+          --exclude='.env' \
+          --exclude='*.log' \
+          --exclude='.DS_Store' \
+          ./ deploy_package/
+        
+        # 压缩文件
+        tar -czf deploy.tar.gz -C deploy_package .
+
+    # 上传到服务器并部署
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
+        command_timeout: 30m
+        script: |
+          # 定义变量
+          APP_DIR="/var/www/ai-hub"
+          BACKUP_DIR="${APP_DIR}/backups"
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          
+          # 创建必要目录
+          mkdir -p ${APP_DIR}
+          mkdir -p ${BACKUP_DIR}
+          mkdir -p ${APP_DIR}/uploads
+          mkdir -p ${APP_DIR}/logs
+          
+          # 备份当前版本
+          if [ -d "${APP_DIR}/current" ]; then
+            echo "备份当前版本..."
+            tar -czf ${BACKUP_DIR}/backup_${TIMESTAMP}.tar.gz -C ${APP_DIR}/current . || true
+            # 只保留最近5个备份
+            cd ${BACKUP_DIR} && ls -t backup_*.tar.gz | tail -n +6 | xargs -r rm -f
+          fi
+          
+          # 创建新版本目录
+          NEW_VERSION_DIR="${APP_DIR}/releases/${TIMESTAMP}"
+          mkdir -p ${NEW_VERSION_DIR}
+
+    # 通过 SCP 上传部署包
+    - name: Upload Deployment Package
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
+        source: "deploy.tar.gz"
+        target: "/tmp/"
+
+    # 解压并部署
+    - name: Extract and Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
+        command_timeout: 30m
+        script: |
+          # 定义变量
+          APP_DIR="/var/www/ai-hub"
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          NEW_VERSION_DIR="${APP_DIR}/releases/${TIMESTAMP}"
+          
+          # 解压文件
+          echo "解压部署包..."
+          tar -xzf /tmp/deploy.tar.gz -C ${NEW_VERSION_DIR}
+          rm -f /tmp/deploy.tar.gz
+          
+          # 进入新版本目录
+          cd ${NEW_VERSION_DIR}
+          
+          # 复制环境变量文件（如果存在）
+          if [ -f "${APP_DIR}/.env" ]; then
+            cp ${APP_DIR}/.env ${NEW_VERSION_DIR}/.env
+          else
+            if [ -f "${NEW_VERSION_DIR}/.env.example" ]; then
+              cp ${NEW_VERSION_DIR}/.env.example ${NEW_VERSION_DIR}/.env
+              echo "警告：使用 .env.example 作为配置文件，请更新配置！"
+            fi
+          fi
+          
+          # 创建软链接到共享目录
+          ln -sfn ${APP_DIR}/uploads ${NEW_VERSION_DIR}/uploads
+          ln -sfn ${APP_DIR}/logs ${NEW_VERSION_DIR}/logs
+          
+          # 安装生产依赖
+          echo "安装依赖..."
+          npm ci --production
+          
+          # 更新当前版本软链接
+          ln -sfn ${NEW_VERSION_DIR} ${APP_DIR}/current
+          
+          # 重启 PM2
+          echo "重启应用..."
+          cd ${APP_DIR}/current
+          
+          # 检查 PM2 是否安装
+          if ! command -v pm2 &> /dev/null; then
+            echo "PM2 未安装，正在安装..."
+            npm install -g pm2
+          fi
+          
+          # 停止并删除旧的 PM2 进程
+          pm2 delete ai-hub || true
+          
+          # 启动新的 PM2 进程
+          pm2 start ecosystem.config.js --name ai-hub --env production
+          
+          # 保存 PM2 进程列表
+          pm2 save
+          
+          # 设置开机自启（只需要执行一次）
+          pm2 startup || true
+          
+          # 显示 PM2 状态
+          pm2 status
+          
+          echo "部署完成！"
+
+    # 健康检查
+    - name: Health Check
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
+        script: |
+          # 等待服务启动
+          echo "等待服务启动..."
+          sleep 10
+          
+          # 健康检查
+          echo "执行健康检查..."
+          curl -f http://localhost:3099/api/test || {
+            echo "健康检查失败！"
+            pm2 logs ai-hub --lines 50
+            exit 1
+          }
+          
+          echo "健康检查通过！"
+
+    # 获取最近的提交日志
+    - name: Get Last Commit Log
+      id: last_commit
+      run: |
+        LAST_COMMIT=$(git log -1 --pretty=format:'%h - %an, %ar : %s')
+        echo "last_commit=$LAST_COMMIT" >> $GITHUB_ENV
+
+    # 成功时发送通知（如果配置了 Webhook）
+    - name: Send Success Notification
+      if: ${{ success() && secrets.NOTIFICATION_WEBHOOK }}
+      run: |
+        curl -X POST -H "Content-Type: application/json" \
+        -d '{
+              "msgtype": "text",
+              "text": {
+                "content": "✅ AI Hub 部署成功！\n执行人：${{ github.actor }}\n分支：${{ github.ref_name }}\n提交：${{ env.last_commit }}\n时间：'$(date +"%Y-%m-%d %H:%M:%S")'"
+              }
+            }' \
+        ${{ secrets.NOTIFICATION_WEBHOOK }} || true
+
+    # 失败时发送通知
+    - name: Send Failure Notification
+      if: ${{ failure() && secrets.NOTIFICATION_WEBHOOK }}
+      run: |
+        curl -X POST -H "Content-Type: application/json" \
+        -d '{
+              "msgtype": "text",
+              "text": {
+                "content": "❌ AI Hub 部署失败！\n执行人：${{ github.actor }}\n分支：${{ github.ref_name }}\n提交：${{ env.last_commit }}\n时间：'$(date +"%Y-%m-%d %H:%M:%S")'\n请检查 GitHub Actions 日志！"
+              }
+            }' \
+        ${{ secrets.NOTIFICATION_WEBHOOK }} || true

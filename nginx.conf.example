@@ -1,0 +1,59 @@
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    # 重定向到 HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name your-domain.com;
+
+    # SSL 证书配置
+    ssl_certificate /path/to/ssl/cert.pem;
+    ssl_certificate_key /path/to/ssl/key.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    # 上传文件大小限制
+    client_max_body_size 2G;
+
+    # 超时设置
+    proxy_connect_timeout 600s;
+    proxy_send_timeout 600s;
+    proxy_read_timeout 600s;
+
+    # 日志
+    access_log /var/log/nginx/ai-hub-access.log;
+    error_log /var/log/nginx/ai-hub-error.log;
+
+    # API 代理
+    location / {
+        proxy_pass http://localhost:3099;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        
+        # 上传进度支持
+        proxy_request_buffering off;
+    }
+
+    # 静态文件缓存
+    location /uploads {
+        proxy_pass http://localhost:3099/uploads;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # API 文档不缓存
+    location /api-docs {
+        proxy_pass http://localhost:3099/api-docs;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+    }
+}

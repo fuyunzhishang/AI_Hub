@@ -11,7 +11,10 @@
       "Bash(npm uninstall:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(chmod:*)"
     ],
     "deny": []
   }
