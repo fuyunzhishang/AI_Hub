@@ -207,26 +207,34 @@ jobs:
 
     # 成功时发送通知（如果配置了 Webhook）
     - name: Send Success Notification
-      if: ${{ success() && secrets.NOTIFICATION_WEBHOOK }}
+      if: ${{ success() }}
+      env:
+        WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK }}
       run: |
-        curl -X POST -H "Content-Type: application/json" \
-        -d '{
-              "msgtype": "text",
-              "text": {
-                "content": "✅ AI Hub 部署成功！\n执行人：${{ github.actor }}\n分支：${{ github.ref_name }}\n提交：${{ env.last_commit }}\n时间：'$(date +"%Y-%m-%d %H:%M:%S")'"
-              }
-            }' \
-        ${{ secrets.NOTIFICATION_WEBHOOK }} || true
+        if [ -n "$WEBHOOK_URL" ]; then
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{
+                "msgtype": "text",
+                "text": {
+                  "content": "✅ AI Hub 部署成功！\n执行人：${{ github.actor }}\n分支：${{ github.ref_name }}\n提交：${{ env.last_commit }}\n时间：'$(date +"%Y-%m-%d %H:%M:%S")'"
+                }
+              }' \
+          "$WEBHOOK_URL" || true
+        fi
 
     # 失败时发送通知
     - name: Send Failure Notification
-      if: ${{ failure() && secrets.NOTIFICATION_WEBHOOK }}
+      if: ${{ failure() }}
+      env:
+        WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK }}
       run: |
-        curl -X POST -H "Content-Type: application/json" \
-        -d '{
-              "msgtype": "text",
-              "text": {
-                "content": "❌ AI Hub 部署失败！\n执行人：${{ github.actor }}\n分支：${{ github.ref_name }}\n提交：${{ env.last_commit }}\n时间：'$(date +"%Y-%m-%d %H:%M:%S")'\n请检查 GitHub Actions 日志！"
-              }
-            }' \
-        ${{ secrets.NOTIFICATION_WEBHOOK }} || true
+        if [ -n "$WEBHOOK_URL" ]; then
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{
+                "msgtype": "text",
+                "text": {
+                  "content": "❌ AI Hub 部署失败！\n执行人：${{ github.actor }}\n分支：${{ github.ref_name }}\n提交：${{ env.last_commit }}\n时间：'$(date +"%Y-%m-%d %H:%M:%S")'\n请检查 GitHub Actions 日志！"
+                }
+              }' \
+          "$WEBHOOK_URL" || true
+        fi
