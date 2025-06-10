@@ -1,0 +1,205 @@
+name: Docker Deploy to Production
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 检出代码
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 设置 Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    # 构建 Docker 镜像
+    - name: Build Docker Image
+      run: |
+        docker build -t ai-hub:latest .
+        docker save ai-hub:latest | gzip > ai-hub.tar.gz
+
+    # 上传镜像到服务器
+    - name: Upload Docker Image
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
+        source: "ai-hub.tar.gz,docker-compose.yml"
+        target: "/tmp/"
+
+    # 部署到服务器
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
+        command_timeout: 30m
+        script: |
+          set -e
+          
+          # 定义变量
+          APP_DIR="/var/www/ai-hub"
+          BACKUP_DIR="${APP_DIR}/backups"
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          
+          # 创建目录结构
+          echo "创建目录结构..."
+          mkdir -p ${APP_DIR}/{uploads,logs,backups}
+          cd ${APP_DIR}
+          
+          # 备份当前版本（如果存在）
+          if [ -f "docker-compose.yml" ]; then
+            echo "备份当前配置..."
+            cp docker-compose.yml ${BACKUP_DIR}/docker-compose.yml.${TIMESTAMP}
+          fi
+          
+          # 复制新的 docker-compose.yml
+          cp /tmp/docker-compose.yml ${APP_DIR}/
+          
+          # 检查 Docker 是否安装
+          if ! command -v docker &> /dev/null; then
+            echo "Docker 未安装，请先安装 Docker！"
+            exit 1
+          fi
+          
+          # 检查 Docker Compose 是否安装
+          if ! command -v docker-compose &> /dev/null; then
+            # 尝试使用 docker compose (新版本)
+            if ! docker compose version &> /dev/null; then
+              echo "Docker Compose 未安装，正在安装..."
+              # 安装 Docker Compose
+              curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              chmod +x /usr/local/bin/docker-compose
+            fi
+          fi
+          
+          # 加载新镜像
+          echo "加载 Docker 镜像..."
+          docker load < /tmp/ai-hub.tar.gz
+          rm -f /tmp/ai-hub.tar.gz
+          
+          # 检查环境变量文件
+          if [ ! -f "${APP_DIR}/.env" ]; then
+            echo "警告：.env 文件不存在！"
+            echo "请创建 .env 文件并配置以下环境变量："
+            echo "TENCENTCLOUD_SECRET_ID=your_secret_id"
+            echo "TENCENTCLOUD_SECRET_KEY=your_secret_key"
+            
+            # 创建示例 .env 文件
+            cat > ${APP_DIR}/.env.example << EOF
+          # Tencent Cloud Credentials
+          TENCENTCLOUD_SECRET_ID=your_secret_id
+          TENCENTCLOUD_SECRET_KEY=your_secret_key
+          
+          # Application Config
+          PORT=3099
+          NODE_ENV=production
+          EOF
+          fi
+          
+          # 停止旧容器
+          echo "停止旧容器..."
+          docker-compose down || docker compose down || true
+          
+          # 启动新容器
+          echo "启动新容器..."
+          if command -v docker-compose &> /dev/null; then
+            docker-compose up -d
+          else
+            docker compose up -d
+          fi
+          
+          # 等待容器启动
+          echo "等待服务启动..."
+          sleep 10
+          
+          # 显示容器状态
+          echo "容器状态："
+          docker ps -a | grep ai-hub || true
+          
+          # 显示容器日志
+          echo "最近的容器日志："
+          docker logs --tail 50 ai-hub || true
+          
+          # 清理旧镜像
+          echo "清理未使用的镜像..."
+          docker image prune -f || true
+          
+          echo "部署完成！"
+
+    # 健康检查
+    - name: Health Check
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        port: ${{ secrets.DEPLOY_PORT || 22 }}
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_PASS }}
+        script: |
+          # 等待服务完全启动
+          echo "执行健康检查..."
+          
+          # 检查容器状态
+          if ! docker ps | grep -q ai-hub; then
+            echo "错误：容器未运行！"
+            docker ps -a
+            exit 1
+          fi
+          
+          # HTTP 健康检查
+          HEALTH_URL="http://localhost:3099/api/test"
+          MAX_ATTEMPTS=10
+          ATTEMPT=1
+          
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
+            echo "健康检查尝试 $ATTEMPT/$MAX_ATTEMPTS..."
+            
+            if curl -f -s -o /dev/null -w "%{http_code}" $HEALTH_URL | grep -q "200"; then
+              echo "✅ 健康检查通过！"
+              
+              # 显示容器信息
+              echo "容器运行状态："
+              docker ps | grep ai-hub
+              
+              # 显示端口监听
+              echo "端口监听状态："
+              netstat -tlpn | grep :3099 || ss -tlpn | grep :3099 || true
+              
+              exit 0
+            else
+              echo "等待服务响应..."
+              sleep 5
+            fi
+            
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+          
+          # 健康检查失败
+          echo "❌ 健康检查失败！"
+          echo "容器日志："
+          docker logs --tail 100 ai-hub
+          exit 1
+
+    # 清理工作流产物
+    - name: Cleanup
+      if: always()
+      run: |
+        rm -f ai-hub.tar.gz
+
+    # 成功通知
+    - name: Success Notification
+      if: success()
+      run: |
+        echo "🎉 Docker 部署成功！"
+        echo "部署时间: $(date)"
+        echo "Git 提交: ${{ github.sha }}"

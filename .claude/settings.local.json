@@ -14,7 +14,9 @@
       "Bash(git config:*)",
       "Bash(git pull:*)",
       "Bash(git fetch:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(git push:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

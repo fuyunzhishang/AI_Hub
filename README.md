@@ -12,14 +12,48 @@
 
 ## 安装要求
 
+### 传统部署
 - Node.js 14.0+
 - FFmpeg（用于音频处理）
 
+### Docker 部署（推荐）
+- Docker 20.10+
+- Docker Compose 1.29+ (或 Docker Desktop)
+
 ## 安装FFmpeg
 
-请参考 [FFMPEG_INSTALL.md](./FFMPEG_INSTALL.md) 文件获取详细的FFmpeg安装指南。
+如果使用传统部署，请参考 [FFMPEG_INSTALL.md](./FFMPEG_INSTALL.md) 文件获取详细的FFmpeg安装指南。
+如果使用 Docker 部署，FFmpeg 已包含在镜像中。
 
-## 安装和启动
+## 部署方式
+
+### 方式一：Docker 部署（推荐）
+
+1. 克隆项目
+   ```bash
+   git clone <repository-url>
+   cd AI_Hub
+   ```
+
+2. 配置环境变量
+   ```bash
+   cp .env.example .env
+   # 编辑 .env 文件，配置必要的环境变量
+   ```
+
+3. 使用 Docker Compose 启动
+   ```bash
+   docker-compose up -d
+   ```
+
+   或使用部署脚本：
+   ```bash
+   ./scripts/docker-deploy.sh
+   ```
+
+4. 访问 http://localhost:3099
+
+### 方式二：传统部署
 
 1. 克隆或下载此项目
 2. 安装依赖：
@@ -34,7 +68,7 @@
    ```
    npm run dev
    ```
-4. 访问 http://localhost:3000 使用Web界面
+4. 访问 http://localhost:3099 使用Web界面
 
 ## API接口
 

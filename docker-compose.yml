@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ai-hub:
+    image: ai-hub:latest
+    container_name: ai-hub
+    restart: unless-stopped
+    ports:
+      - "3099:3099"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+      - ./.env:/app/.env:ro
+    environment:
+      - NODE_ENV=production
+      - PORT=3099
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3099/api/test"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    networks:
+      - ai-hub-network
+
+networks:
+  ai-hub-network:
+    driver: bridge
