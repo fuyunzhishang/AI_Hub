@@ -57,41 +57,14 @@ jobs:
           --exclude='.DS_Store' \
           ./ deploy_package/
         
+        # 确认 package-lock.json 被包含
+        if [ ! -f "deploy_package/package-lock.json" ]; then
+          echo "错误：package-lock.json 未被包含在部署包中"
+          exit 1
+        fi
+        
         # 压缩文件
         tar -czf deploy.tar.gz -C deploy_package .
-
-    # 上传到服务器并部署
-    - name: Deploy to Server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        port: ${{ secrets.DEPLOY_PORT || 22 }}
-        username: ${{ secrets.DEPLOY_USER }}
-        password: ${{ secrets.DEPLOY_PASS }}
-        command_timeout: 30m
-        script: |
-          # 定义变量
-          APP_DIR="/var/www/ai-hub"
-          BACKUP_DIR="${APP_DIR}/backups"
-          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-          
-          # 创建必要目录
-          mkdir -p ${APP_DIR}
-          mkdir -p ${BACKUP_DIR}
-          mkdir -p ${APP_DIR}/uploads
-          mkdir -p ${APP_DIR}/logs
-          
-          # 备份当前版本
-          if [ -d "${APP_DIR}/current" ]; then
-            echo "备份当前版本..."
-            tar -czf ${BACKUP_DIR}/backup_${TIMESTAMP}.tar.gz -C ${APP_DIR}/current . || true
-            # 只保留最近5个备份
-            cd ${BACKUP_DIR} && ls -t backup_*.tar.gz | tail -n +6 | xargs -r rm -f
-          fi
-          
-          # 创建新版本目录
-          NEW_VERSION_DIR="${APP_DIR}/releases/${TIMESTAMP}"
-          mkdir -p ${NEW_VERSION_DIR}
 
     # 通过 SCP 上传部署包
     - name: Upload Deployment Package
@@ -104,8 +77,8 @@ jobs:
         source: "deploy.tar.gz"
         target: "/tmp/"
 
-    # 解压并部署
-    - name: Extract and Deploy
+    # 部署应用
+    - name: Deploy Application
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.DEPLOY_HOST }}
@@ -114,20 +87,43 @@ jobs:
         password: ${{ secrets.DEPLOY_PASS }}
         command_timeout: 30m
         script: |
+          set -e  # 遇到错误立即退出
+          
           # 定义变量
           APP_DIR="/var/www/ai-hub"
+          BACKUP_DIR="${APP_DIR}/backups"
           TIMESTAMP=$(date +%Y%m%d_%H%M%S)
           NEW_VERSION_DIR="${APP_DIR}/releases/${TIMESTAMP}"
           
-          # 解压文件
-          echo "解压部署包..."
+          # 创建必要目录
+          echo "创建目录结构..."
+          mkdir -p ${APP_DIR}/{releases,backups,uploads,logs}
+          
+          # 备份当前版本
+          if [ -d "${APP_DIR}/current" ]; then
+            echo "备份当前版本..."
+            tar -czf ${BACKUP_DIR}/backup_${TIMESTAMP}.tar.gz -C ${APP_DIR}/current . || true
+            # 只保留最近5个备份
+            cd ${BACKUP_DIR} && ls -t backup_*.tar.gz | tail -n +6 | xargs -r rm -f
+          fi
+          
+          # 创建新版本目录并解压
+          echo "部署新版本到: ${NEW_VERSION_DIR}"
+          mkdir -p ${NEW_VERSION_DIR}
           tar -xzf /tmp/deploy.tar.gz -C ${NEW_VERSION_DIR}
           rm -f /tmp/deploy.tar.gz
           
           # 进入新版本目录
           cd ${NEW_VERSION_DIR}
           
-          # 复制环境变量文件（如果存在）
+          # 检查 package-lock.json 是否存在
+          if [ ! -f "package-lock.json" ]; then
+            echo "错误：package-lock.json 不存在！"
+            ls -la
+            exit 1
+          fi
+          
+          # 复制环境变量文件
           if [ -f "${APP_DIR}/.env" ]; then
             cp ${APP_DIR}/.env ${NEW_VERSION_DIR}/.env
           else
@@ -160,6 +156,13 @@ jobs:
           
           # 停止并删除旧的 PM2 进程
           pm2 delete ai-hub || true
+          
+          # 检查 ecosystem.config.js 是否存在
+          if [ ! -f "ecosystem.config.js" ]; then
+            echo "错误：ecosystem.config.js 不存在！"
+            ls -la
+            exit 1
+          fi
           
           # 启动新的 PM2 进程
           pm2 start ecosystem.config.js --name ai-hub --env production
