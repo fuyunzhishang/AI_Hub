@@ -46,7 +46,8 @@ COPY --chown=nodejs:nodejs . .
 
 # 创建必要的目录并设置权限
 RUN mkdir -p uploads logs && \
-    chown -R nodejs:nodejs uploads logs
+    chown -R nodejs:nodejs uploads logs && \
+    chmod -R 755 uploads logs
 
 # 切换到非 root 用户
 USER nodejs

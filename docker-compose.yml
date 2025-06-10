@@ -8,8 +8,8 @@ services:
     ports:
       - "3099:3099"
     volumes:
-      - ./uploads:/app/uploads
-      - ./logs:/app/logs
+      - ./uploads:/app/uploads:rw
+      - ./logs:/app/logs:rw
     env_file:
       - ./.env
     environment:
