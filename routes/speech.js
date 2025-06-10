@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { recognizeAudio } from '../controllers/speechController.js';
+import { recognizeAudio, cleanupCOSFile } from '../controllers/speechController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,7 +37,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ 
   storage,
   fileFilter,
-  limits: { fileSize: 10 * 1024 * 1024 } // 限制文件大小为 10MB（腾讯云语音识别有大小限制）
+  limits: { fileSize: 100 * 1024 * 1024 } // 限制文件大小为 100MB，大文件会自动上传到COS
 });
 
 /**
@@ -56,7 +56,7 @@ const upload = multer({
  *               audio:
  *                 type: string
  *                 format: binary
- *                 description: 音频文件 (支持 wav, mp3, silk, m4a, aac, flac，最大10MB)
+ *                 description: 音频文件 (支持 wav, mp3, silk, m4a, aac, flac，最大100MB，大于5MB自动上传到COS)
  *               engineType:
  *                 type: string
  *                 enum: [16k_zh, 16k_zh_dialect, 16k_en, 16k_ca]
@@ -99,5 +99,44 @@ const upload = multer({
  *         description: 服务器错误
  */
 router.post('/recognize', upload.single('audio'), recognizeAudio);
+
+/**
+ * @swagger
+ * /api/speech/cleanup-cos:
+ *   post:
+ *     summary: 清理COS临时文件
+ *     tags: [语音服务]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               cosKey:
+ *                 type: string
+ *                 description: COS文件键值
+ *             required:
+ *               - cosKey
+ *     responses:
+ *       200:
+ *         description: 清理成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 deletedKey:
+ *                   type: string
+ *       400:
+ *         description: 请求错误
+ *       500:
+ *         description: 服务器错误
+ */
+router.post('/cleanup-cos', cleanupCOSFile);
 
 export default router;

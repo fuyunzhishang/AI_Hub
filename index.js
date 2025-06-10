@@ -9,6 +9,7 @@ import audioRoutes from './routes/audio.js';
 import speechRoutes from './routes/speech.js';
 import stsRoutes from './routes/sts.js';
 import googleFilesRoutes from './routes/googleFiles.js';
+import credentialRoutes from './routes/credential.js';
 import tencentcloud from "tencentcloud-sdk-nodejs";
 
 // 加载环境变量
@@ -44,6 +45,7 @@ app.use('/api/audio', audioRoutes);
 app.use('/api/speech', speechRoutes);
 app.use('/api/sts', stsRoutes);
 app.use('/api/google-files', googleFilesRoutes);
+app.use('/api/credential', credentialRoutes);
 
 /**
  * @swagger

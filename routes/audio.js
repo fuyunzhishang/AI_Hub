@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { transcodeAudio, extractAudioData } from '../controllers/audioController.js';
+import { transcodeAudio, extractAudioData, checkFFmpegStatus } from '../controllers/audioController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -150,6 +150,32 @@ router.post('/transcode', upload.single('audio'), transcodeAudio);
  *         description: 服务器错误
  */
 router.post('/extract', upload.single('audio'), extractAudioData);
+
+/**
+ * @swagger
+ * /api/audio/ffmpeg-status:
+ *   get:
+ *     summary: 检查FFmpeg安装状态
+ *     tags: [音频处理]
+ *     responses:
+ *       200:
+ *         description: 成功获取FFmpeg状态
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 status:
+ *                   type: object
+ *                 userFriendlyMessage:
+ *                   type: string
+ */
+// FFmpeg 状态检查路由
+router.get('/ffmpeg-status', checkFFmpegStatus);
 
 /**
  * @swagger
