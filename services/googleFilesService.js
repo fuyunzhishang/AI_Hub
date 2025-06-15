@@ -71,7 +71,7 @@ export const uploadFile = async (filePath, mimeType, displayName) => {
  */
 export const getFileInfo = async (fileId) => {
   try {
-    const fileInfo = await ai.files.retrieve(fileId);
+    const fileInfo = await ai.files.get({ name: fileId });
     
     return {
       success: true,
@@ -112,21 +112,23 @@ export const listFiles = async (pageSize = 10, pageToken = null) => {
 
     const listResult = await ai.files.list(options);
     
-    // 处理异步迭代器
+    // 处理文件列表
     const files = [];
-    for await (const file of listResult) {
-      files.push({
-        fileId: file.name,
-        name: file.displayName,
-        mimeType: file.mimeType,
-        sizeBytes: file.sizeBytes,
-        createTime: file.createTime,
-        updateTime: file.updateTime,
-        uri: file.uri,
-        state: file.state,
-        sha256Hash: file.sha256Hash,
-        expirationTime: file.expirationTime
-      });
+    if (listResult.files) {
+      for (const file of listResult.files) {
+        files.push({
+          fileId: file.name,
+          name: file.displayName,
+          mimeType: file.mimeType,
+          sizeBytes: file.sizeBytes,
+          createTime: file.createTime,
+          updateTime: file.updateTime,
+          uri: file.uri,
+          state: file.state,
+          sha256Hash: file.sha256Hash,
+          expirationTime: file.expirationTime
+        });
+      }
     }
     
     return {
@@ -149,7 +151,7 @@ export const listFiles = async (pageSize = 10, pageToken = null) => {
  */
 export const deleteFile = async (fileId) => {
   try {
-    await ai.files.delete(fileId);
+    await ai.files.delete({ name: fileId });
     
     return {
       success: true,

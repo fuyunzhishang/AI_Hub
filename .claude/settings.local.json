@@ -16,7 +16,9 @@
       "Bash(git fetch:*)",
       "Bash(chmod:*)",
       "Bash(git push:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(curl:*)",
+      "Bash(cat:*)"
     ],
     "deny": []
   }
