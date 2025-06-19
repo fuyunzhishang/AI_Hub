@@ -12,7 +12,6 @@ import googleFilesRoutes from './routes/googleFiles.js';
 import credentialRoutes from './routes/credential.js';
 import digitalHumanRoutes from './routes/digitalHuman.js';
 import authVideoRoutes from './routes/authVideo.js';
-import volcanoTTSRoutes from './routes/volcanoTTS.js';
 import tencentcloud from "tencentcloud-sdk-nodejs";
 
 // 加载环境变量
@@ -51,7 +50,6 @@ app.use('/api/google-files', googleFilesRoutes);
 app.use('/api/credential', credentialRoutes);
 app.use('/api/digital-human', digitalHumanRoutes);
 app.use('/api/auth-video', authVideoRoutes);
-app.use('/api/volcano-tts', volcanoTTSRoutes);
 
 /**
  * @swagger
