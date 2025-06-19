@@ -71,6 +71,139 @@ export const queryStatus = async (req, res) => {
   }
 };
 
+export const synthesizeSpeechHTTP = async (req, res) => {
+  try {
+    const { text, voice, encoding, speed, volume, pitch, speakerId, sampleRate } = req.body;
+    
+    if (!text) {
+      return res.status(400).json({
+        success: false,
+        error: 'text参数必须提供'
+      });
+    }
+
+    const options = {
+      voice,
+      encoding,
+      speed: speed ? parseFloat(speed) : undefined,
+      volume: volume ? parseFloat(volume) : undefined,
+      pitch: pitch ? parseFloat(pitch) : undefined,
+      speakerId,
+      sampleRate: sampleRate ? parseInt(sampleRate) : undefined
+    };
+
+    const ttsService = new VolcanoTTSService();
+    const result = await ttsService.synthesizeSpeechHTTP(text, options);
+    
+    if (options.encoding === 'binary') {
+      res.set({
+        'Content-Type': result.contentType || 'audio/mpeg',
+        'Content-Length': result.audioLength,
+        'Content-Disposition': 'attachment; filename="tts_audio.mp3"'
+      });
+      res.send(result.audioData);
+    } else {
+      res.json({
+        success: true,
+        data: result.data,
+        audioData: result.audioData,
+        audioUrl: result.audioUrl
+      });
+    }
+  } catch (error) {
+    console.error('HTTP TTS synthesis error:', error.message);
+    res.status(500).json({
+      success: false,
+      error: 'HTTP语音合成失败',
+      details: error.message
+    });
+  }
+};
+
+export const synthesizeSpeechWebSocketBinary = async (req, res) => {
+  try {
+    const { text, voice, encoding, speed, volume, pitch, speakerId, sampleRate, reqid } = req.body;
+    
+    if (!text) {
+      return res.status(400).json({
+        success: false,
+        error: 'text参数必须提供'
+      });
+    }
+
+    const options = {
+      voice,
+      encoding,
+      speed: speed ? parseFloat(speed) : undefined,
+      volume: volume ? parseFloat(volume) : undefined,
+      pitch: pitch ? parseFloat(pitch) : undefined,
+      speakerId,
+      sampleRate: sampleRate ? parseInt(sampleRate) : undefined,
+      reqid
+    };
+
+    const ttsService = new VolcanoTTSService();
+    const result = await ttsService.synthesizeSpeechWebSocketBinary(text, options);
+    
+    res.json({
+      success: true,
+      audioData: result.audioData.toString('base64'),
+      reqid: result.reqid,
+      audioLength: result.audioLength,
+      encoding: result.encoding
+    });
+  } catch (error) {
+    console.error('WebSocket Binary TTS synthesis error:', error.message);
+    res.status(500).json({
+      success: false,
+      error: 'WebSocket Binary语音合成失败',
+      details: error.message
+    });
+  }
+};
+
+export const synthesizeSpeechWebSocketBinaryStream = async (req, res) => {
+  try {
+    const { text, voice, encoding, speed, volume, pitch, speakerId, sampleRate, reqid } = req.body;
+    
+    if (!text) {
+      return res.status(400).json({
+        success: false,
+        error: 'text参数必须提供'
+      });
+    }
+
+    const options = {
+      voice,
+      encoding,
+      speed: speed ? parseFloat(speed) : undefined,
+      volume: volume ? parseFloat(volume) : undefined,
+      pitch: pitch ? parseFloat(pitch) : undefined,
+      speakerId,
+      sampleRate: sampleRate ? parseInt(sampleRate) : undefined,
+      reqid
+    };
+
+    const ttsService = new VolcanoTTSService();
+    const result = await ttsService.synthesizeSpeechWebSocketBinary(text, options);
+    
+    res.set({
+      'Content-Type': 'audio/mpeg',
+      'Content-Length': result.audioLength,
+      'Content-Disposition': 'attachment; filename="tts_audio_ws.mp3"',
+      'X-Request-ID': result.reqid
+    });
+    res.send(result.audioData);
+  } catch (error) {
+    console.error('WebSocket Binary TTS stream error:', error.message);
+    res.status(500).json({
+      success: false,
+      error: 'WebSocket Binary音频流失败',
+      details: error.message
+    });
+  }
+};
+
 export const healthCheck = async (req, res) => {
   try {
     const ttsService = new VolcanoTTSService();
@@ -81,7 +214,11 @@ export const healthCheck = async (req, res) => {
       data: {
         status: isHealthy ? 'healthy' : 'unhealthy',
         timestamp: new Date().toISOString(),
-        service: 'Volcano TTS'
+        service: 'Volcano TTS',
+        endpoints: [
+          'HTTP: https://openspeech.bytedance.com/api/v1/tts',
+          'WebSocket Binary: wss://openspeech.bytedance.com/api/v1/tts/ws_binary'
+        ]
       }
     });
   } catch (error) {

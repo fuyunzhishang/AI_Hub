@@ -13,6 +13,7 @@ import credentialRoutes from './routes/credential.js';
 import digitalHumanRoutes from './routes/digitalHuman.js';
 import authVideoRoutes from './routes/authVideo.js';
 import volcanoTTSRoutes from './routes/volcanoTTS.js';
+import WebSocketTTSServer from './services/websocketTTSServer.js';
 import tencentcloud from "tencentcloud-sdk-nodejs";
 
 // 加载环境变量
@@ -147,6 +148,10 @@ app.get('/cos-demo', (req, res) => {
 });
 
 // 启动服务器
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`服务器已启动，端口号：${PORT}`);
 });
+
+// 启动WebSocket TTS服务器
+const wsServer = new WebSocketTTSServer(server);
+console.log('WebSocket TTS服务已启动 (包含Binary支持)');
