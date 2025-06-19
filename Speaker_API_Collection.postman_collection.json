@@ -1,0 +1,262 @@
+{
+  "info": {
+    "name": "Speaker API Collection",
+    "description": "16AI数字人音色管理API接口集合",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{BEARER_TOKEN}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3099/api/digital-human",
+      "type": "string"
+    },
+    {
+      "key": "BEARER_TOKEN",
+      "value": "your-bearer-token-here",
+      "type": "string"
+    },
+    {
+      "key": "SPEAKER_ID",
+      "value": "123456789",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "音色管理",
+      "item": [
+        {
+          "name": "1. 创建音色",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"audioUrl\": \"https://example.com/audio.mp3\",\n  \"title\": \"测试音色\",\n  \"model\": \"V1.0\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/speaker/create",
+              "host": ["{{BASE_URL}}"],
+              "path": ["speaker", "create"]
+            },
+            "description": "创建新的音色模型"
+          }
+        },
+        {
+          "name": "2. 语音合成(TTS)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"这是一个语音合成测试文本，用于验证TTS功能是否正常工作。\",\n  \"speakerId\": {{SPEAKER_ID}},\n  \"speedRatio\": 1.0,\n  \"volumeRatio\": 1.0,\n  \"pitchRatio\": 1.0\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/speaker/tts",
+              "host": ["{{BASE_URL}}"],
+              "path": ["speaker", "tts"]
+            },
+            "description": "将文本转换为语音"
+          }
+        },
+        {
+          "name": "3. 查询音色列表",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/speaker/list",
+              "host": ["{{BASE_URL}}"],
+              "path": ["speaker", "list"]
+            },
+            "description": "获取所有可用的音色列表"
+          }
+        },
+        {
+          "name": "4. 查询音色状态",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"speakerId\": {{SPEAKER_ID}}\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/speaker/status",
+              "host": ["{{BASE_URL}}"],
+              "path": ["speaker", "status"]
+            },
+            "description": "查询指定音色的训练状态和进度"
+          }
+        },
+        {
+          "name": "5. 重新创建音色",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"speakerId\": {{SPEAKER_ID}},\n  \"audioUrl\": \"https://example.com/new-audio.mp3\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/speaker/recreate",
+              "host": ["{{BASE_URL}}"],
+              "path": ["speaker", "recreate"]
+            },
+            "description": "重新训练指定的音色模型"
+          }
+        },
+        {
+          "name": "6. 删除音色",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"speakerId\": {{SPEAKER_ID}}\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/speaker/delete",
+              "host": ["{{BASE_URL}}"],
+              "path": ["speaker", "delete"]
+            },
+            "description": "删除指定的音色模型"
+          }
+        },
+        {
+          "name": "7. 查询重训练记录",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"speakerId\": {{SPEAKER_ID}}\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/speaker/recreated-record",
+              "host": ["{{BASE_URL}}"],
+              "path": ["speaker", "recreated-record"]
+            },
+            "description": "查询音色的重新训练历史记录"
+          }
+        }
+      ]
+    },
+    {
+      "name": "文件上传",
+      "item": [
+        {
+          "name": "8. 获取音频上传URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"audio\",\n  \"suffix\": \"mp3\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/upload/get-put-url",
+              "host": ["{{BASE_URL}}"],
+              "path": ["upload", "get-put-url"]
+            },
+            "description": "获取用于上传音频文件的预签名URL"
+          }
+        },
+        {
+          "name": "9. 获取视频上传URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"video\",\n  \"suffix\": \"mp4\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/upload/get-put-url",
+              "host": ["{{BASE_URL}}"],
+              "path": ["upload", "get-put-url"]
+            },
+            "description": "获取用于上传视频文件的预签名URL"
+          }
+        }
+      ]
+    },
+    {
+      "name": "健康检查",
+      "item": [
+        {
+          "name": "API健康检查",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/health",
+              "host": ["{{BASE_URL}}"],
+              "path": ["health"]
+            },
+            "description": "检查API服务是否正常运行"
+          }
+        }
+      ]
+    }
+  ]
+}

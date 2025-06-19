@@ -18,7 +18,16 @@
       "Bash(git push:*)",
       "Bash(mv:*)",
       "Bash(curl:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:api.16ai.vip)",
+      "WebFetch(domain:api.16ai.vip)",
+      "WebFetch(domain:api.16ai.vip)",
+      "Bash(npm:*)",
+      "Bash(timeout 10s npm start)",
+      "Bash(timeout 5s npm run dev)",
+      "Bash(grep:*)",
+      "Bash(timeout 3s npm run dev)"
     ],
     "deny": []
   }
