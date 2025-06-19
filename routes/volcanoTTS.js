@@ -4,9 +4,6 @@ import path from 'path';
 import {
   uploadAudio,
   queryStatus,
-  synthesizeSpeechHTTP,
-  synthesizeSpeechWebSocketBinary,
-  synthesizeSpeechWebSocketBinaryStream,
   healthCheck
 } from '../controllers/volcanoTTSController.js';
 
@@ -52,11 +49,5 @@ router.get('/health', healthCheck);
 router.post('/mega-tts/audio/upload', upload.single('audio'), uploadAudio);
 
 router.get('/mega-tts/status', queryStatus);
-
-router.post('/tts/http', synthesizeSpeechHTTP);
-
-router.post('/tts/ws-binary', synthesizeSpeechWebSocketBinary);
-
-router.post('/tts/ws-binary-stream', synthesizeSpeechWebSocketBinaryStream);
 
 export default router;
