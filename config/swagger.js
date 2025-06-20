@@ -47,6 +47,10 @@ const options = {
       {
         name: '腾讯云 STS',
         description: '腾讯云临时密钥生成'
+      },
+      {
+        name: '视频理解',
+        description: '基于 Google Gemini 的视频内容分析'
       }
     ]
   },
