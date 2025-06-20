@@ -13,6 +13,7 @@ import credentialRoutes from './routes/credential.js';
 import digitalHumanRoutes from './routes/digitalHuman.js';
 import authVideoRoutes from './routes/authVideo.js';
 import tencentcloud from "tencentcloud-sdk-nodejs";
+import voiceRoutes from './routes/voice.js';
 
 // 加载环境变量
 dotenv.config();
@@ -46,6 +47,7 @@ app.get('/api-docs.json', (req, res) => {
 app.use('/api/audio', audioRoutes);
 app.use('/api/speech', speechRoutes);
 app.use('/api/sts', stsRoutes);
+app.use('/api/voice', voiceRoutes); // 添加新路由
 app.use('/api/google-files', googleFilesRoutes);
 app.use('/api/credential', credentialRoutes);
 app.use('/api/digital-human', digitalHumanRoutes);
