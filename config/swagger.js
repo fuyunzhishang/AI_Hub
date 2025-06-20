@@ -50,7 +50,10 @@ const options = {
       }
     ]
   },
-  apis: ['./routes/*.js'], // 指定包含 API 注释的文件路径
+  apis: [
+    './routes/*.js',          // 保留路由文件扫描
+    './controllers/*.js'      // 添加控制器文件扫描
+  ],
 };
 
 const swaggerSpec = swaggerJsdoc(options);

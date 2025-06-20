@@ -13,7 +13,7 @@ import credentialRoutes from './routes/credential.js';
 import digitalHumanRoutes from './routes/digitalHuman.js';
 import authVideoRoutes from './routes/authVideo.js';
 import tencentcloud from "tencentcloud-sdk-nodejs";
-import voiceRoutes from './routes/voice.js';
+import voiceRouter from './routes/voice.js';
 
 // 加载环境变量
 dotenv.config();
@@ -47,7 +47,7 @@ app.get('/api-docs.json', (req, res) => {
 app.use('/api/audio', audioRoutes);
 app.use('/api/speech', speechRoutes);
 app.use('/api/sts', stsRoutes);
-app.use('/api/voice', voiceRoutes); // 添加新路由
+app.use('/v1/voice', voiceRouter); // 确认此行存在
 app.use('/api/google-files', googleFilesRoutes);
 app.use('/api/credential', credentialRoutes);
 app.use('/api/digital-human', digitalHumanRoutes);
@@ -80,13 +80,13 @@ app.get('/api/test', async (req, res) => {
   // 首先检查是否配置了腾讯云密钥
   const secretId = process.env.TENCENTCLOUD_SECRET_ID;
   const secretKey = process.env.TENCENTCLOUD_SECRET_KEY;
-  
+
   // 如果没有配置密钥或使用的是默认占位符，返回基础健康检查
-  if (!secretId || !secretKey || 
-      secretId === 'your_secret_id_here' || 
-      secretId === 'your_secret_id' ||
-      secretKey === 'your_secret_key_here' ||
-      secretKey === 'your_secret_key') {
+  if (!secretId || !secretKey ||
+    secretId === 'your_secret_id_here' ||
+    secretId === 'your_secret_id' ||
+    secretKey === 'your_secret_key_here' ||
+    secretKey === 'your_secret_key') {
     return res.json({
       status: 'ok',
       message: 'Service is running (Tencent Cloud not configured)',
@@ -113,9 +113,9 @@ app.get('/api/test', async (req, res) => {
         },
       },
     })
-    
+
     const data = await client.DescribeZones();
-    
+
     res.json({
       status: 'ok',
       message: 'Service is running (Tencent Cloud connected)',

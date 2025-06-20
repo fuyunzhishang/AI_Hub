@@ -62,6 +62,9 @@ export class TTSSocketClient {
   /**
    * 连接到TTS WebSocket服务
    * @param {Object} config - 连接配置
+   * @param {string} config.url - WebSocket URL
+   * @param {string} config.token - 访问令牌
+   * @param {string} config.resourceId - Resource-Id值
    * @returns {Promise} 连接结果
    */
   connect(config) {
@@ -69,7 +72,7 @@ export class TTSSocketClient {
       this.socket = new WebSocket(config.url, {
         headers: {
           'Authorization': `Bearer; ${config.token}`,
-          'Resource-Id': 'volc.megatts.voiceclone'
+          'Resource-Id': config.resourceId  // 动态Resource-Id
         }
       });
 
@@ -146,6 +149,7 @@ export class TTSSocketClient {
   /**
    * 发送TTS合成请求
    * @param {Object} params - 请求参数
+   * @param {string} params.cluster - 集群名称
    * @returns {Promise<Buffer>} 合成的音频数据
    */
   sendSynthesisRequest(params) {
@@ -159,14 +163,14 @@ export class TTSSocketClient {
       this.resolve = resolve;
       this.reject = reject;
       this.audioChunks = [];
-
+  
       // 构建请求payload
       const payload = JSON.stringify({
         appid: params.appid,
         reqid: this.reqId,
         text: params.text,
         voice_type: params.voiceType,
-        cluster: 'volcano_icl',
+        cluster: params.cluster,  // 动态cluster参数
         operation: 'submit',
         audio: {
           format: params.audioFormat || 'mp3',
@@ -174,7 +178,7 @@ export class TTSSocketClient {
           bitrate: params.bitrate || 64000
         }
       });
-
+  
       // 构建请求头
       const header = this.buildHeader({
         version: 0b0001,
@@ -185,7 +189,7 @@ export class TTSSocketClient {
         compression: 0b0000,
         reserved: 0x00
       });
-
+  
       // 发送请求 (header + payload)
       const requestData = Buffer.concat([header, Buffer.from(payload)]);
       this.socket.send(requestData);

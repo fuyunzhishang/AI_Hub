@@ -1,7 +1,9 @@
 import axios from 'axios';
+import digitalHumanConfig from './config/digitalHuman.js';
 
 const BASE_URL = 'http://localhost:3099/api/digital-human';
-const BEARER_TOKEN = 'your-bearer-token-here'; // 替换为实际的Bearer Token
+// 使用配置文件中的Bearer Token
+const BEARER_TOKEN = digitalHumanConfig.pomegranateToken.replace('Bearer ', '');
 
 const client = axios.create({
   baseURL: BASE_URL,

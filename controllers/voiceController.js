@@ -3,9 +3,67 @@ import path from 'path';
 // 在文件顶部添加导入语句
 import * as voiceService from '../services/voiceService.js';
 import { trainVoice as trainVoiceService } from '../services/voiceService.js';
+import { getVoiceTrainingStatus } from '../services/voiceService.js';
 
 /**
  * 处理音色训练请求
+ */
+/**
+ * @swagger
+ * /v1/voice/train:
+ *   post:
+ *     operationId: trainVoice
+ *     summary: 提交音色训练任务
+ *     description: 上传音频文件并提交音色训练任务
+ *     tags:
+ *       - 语音服务
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - audio
+ *               - speaker_id
+ *             properties:
+ *               audio:
+ *                 type: string
+ *                 format: binary
+ *                 description: 音频文件 (支持wav、mp3、ogg、m4a、aac、pcm格式，最大10MB)
+ *               speaker_id:
+ *                 type: string
+ *                 pattern: ^S_\w+$
+ *                 description: 音色ID（必须以S_开头）
+ *               text:
+ *                 type: string
+ *                 description: 训练文本
+ *               language:
+ *                 type: integer
+ *                 default: 0
+ *                 description: 语言类型（0:中文, 1:英文）
+ *               model_type:
+ *                 type: integer
+ *                 default: 0
+ *                 description: 模型类型
+ *     responses:
+ *       200:
+ *         description: 训练任务提交成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *       400:
+ *         description: 参数错误
+ *       500:
+ *         description: 服务器错误
  */
 export const trainVoice = async (req, res) => {
   try {
@@ -57,279 +115,83 @@ export const trainVoice = async (req, res) => {
   }
 };
 
+
 /**
- * 查询音色训练状态
+ * @swagger
+ * /v1/voice/training/status:
+ *   get:
+ *     operationId: getVoiceTrainingStatus
+ *     summary: 查询音色训练状态
+ *     description: 根据 speaker_id 查询字节跳动音色训练任务的实时状态
+ *     tags:
+ *       - 语音服务
+ *     parameters:
+ *       - in: query
+ *         name: speaker_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           pattern: ^S_\w+$
+ *         description: 音色 ID（必须以 S_ 开头）
+ *     responses:
+ *       200:
+ *         description: 查询成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 code: { type: integer, description: "状态码" }
+ *                 message: { type: string, description: "提示信息" }
+ *                 data: { type: object, description: "训练状态数据" }
+ *       400:
+ *         description: 参数错误
+ *       500:
+ *         description: 服务器错误
  */
-export const listVoiceStatus = async (req, res) => {
+export const getVoiceTrainingStatusHandler = async (req, res) => {
   try {
-    const { speakerIDs, state, orderTimeStart, orderTimeEnd, expireTimeStart, expireTimeEnd } = req.query;
+    const { speaker_id } = req.query;
 
-    // 处理数组参数
-    const parsedSpeakerIDs = speakerIDs ? speakerIDs.split(',') : undefined;
+    // 参数验证
+    if (!speaker_id || typeof speaker_id !== 'string' || !speaker_id.startsWith('S_')) {
+      return res.status(400).json({
+        code: 400,
+        message: '无效的speaker_id参数，必须提供以S_开头的字符串类型音色ID'
+      });
+    }
 
-    // 调用服务层
-    const result = await voiceService.listVoiceStatus({
-      speakerIDs: parsedSpeakerIDs,
-      state,
-      orderTimeStart: orderTimeStart ? parseInt(orderTimeStart) : undefined,
-      orderTimeEnd: orderTimeEnd ? parseInt(orderTimeEnd) : undefined,
-      expireTimeStart: expireTimeStart ? parseInt(expireTimeStart) : undefined,
-      expireTimeEnd: expireTimeEnd ? parseInt(expireTimeEnd) : undefined
-    });
+    // 调用service层方法 - 传递speaker_id参数
+    const result = await getVoiceTrainingStatus({ speakerId: speaker_id });
 
-    res.json({
-      code: 200,
+    // 处理字节跳动API标准响应格式
+    if (result.BaseResp && result.BaseResp.StatusCode !== 0) {
+      return res.status(400).json({
+        code: result.BaseResp.StatusCode,
+        message: result.BaseResp.StatusMessage || '查询训练状态失败'
+      });
+    }
+
+    // 返回成功响应
+    return res.status(200).json({
+      code: 0,
       message: 'success',
       data: result
     });
   } catch (error) {
-    console.error('查询音色状态接口异常:', error);
-    res.status(500).json({
+    console.error('获取语音训练状态失败:', error);
+    return res.status(500).json({
       code: 500,
-      message: error.message || '查询音色状态失败'
+      message: '获取训练状态失败: ' + error.message
     });
   }
 };
 
-/**
- * HTTP方式文本转语音
- */
-export const synthesizeVoiceHttp = async (req, res) => {
-  try {
-    const { text, voice_type, encoding, speed_ratio, explicit_language } = req.body;
-    const { appid, token } = req.user;  // 假设从认证中获取，或从环境变量读取
-
-    // 参数验证
-    if (!text) {
-      return res.status(400).json({ code: 400, message: '文本内容不能为空' });
-    }
-    if (!voice_type || !voice_type.startsWith('S_')) {
-      return res.status(400).json({ code: 400, message: '无效的音色ID，必须以S_开头' });
-    }
-
-    // 调用服务层
-    const audioBuffer = await textToSpeechHttp({
-      text,
-      voiceType: voice_type,
-      appid: appid || process.env.BYTE_DANCE_APPID,
-      token: token || process.env.BYTE_DANCE_TOKEN,
-      encoding,
-      speedRatio: speed_ratio,
-      explicitLanguage: explicit_language
-    });
-
-    // 设置响应头并返回音频
-    res.setHeader('Content-Type', `audio/${encoding === 'pcm' ? 'x-wav' : encoding}`);
-    res.setHeader('Content-Length', audioBuffer.length);
-    res.setHeader('X-Tt-Logid', req.body.reqid || uuidv4());  // 返回logid便于追踪
-    res.send(audioBuffer);
-  } catch (error) {
-    console.error('语音合成失败:', error);
-    res.status(500).json({
-      code: 500,
-      message: error.message || '语音合成服务异常'
-    });
-  }
-};
-
-/**
- * 音色下单
- */
-export const orderVoiceResource = async (req, res) => {
-  try {
-    const { times, quantity, autoUseCoupon, couponID, resourceTag } = req.body;
-
-    // 参数验证
-    if (!times || !quantity) {
-      return res.status(400).json({
-        code: 400,
-        message: '时长(Times)和数量(Quantity)为必填参数'
-      });
-    }
-
-    if (!Number.isInteger(times) || times <= 0) {
-      return res.status(400).json({
-        code: 400,
-        message: '时长(Times)必须为正整数'
-      });
-    }
-
-    if (!Number.isInteger(quantity) || quantity <= 0 || quantity > 2000) {
-      return res.status(400).json({
-        code: 400,
-        message: '数量(Quantity)必须为1-2000之间的整数'
-      });
-    }
-
-    // 调用服务层
-    const result = await voiceService.orderVoiceResourcePacks({
-      times,
-      quantity,
-      autoUseCoupon,
-      couponID,
-      resourceTag
-    });
-
-    res.json({
-      code: 200,
-      message: '下单成功',
-      data: result
-    });
-  } catch (error) {
-    console.error('音色下单接口异常:', error);
-    res.status(500).json({
-      code: 500,
-      message: error.message || '音色下单失败'
-    });
-  }
-};
-
-/**
- * 音色续费
- */
-export const renewVoiceResource = async (req, res) => {
-  try {
-    const { times, speakerIDs, autoUseCoupon, couponID } = req.body;
-
-    // 参数验证
-    if (times === undefined || !Number.isInteger(times) || times <= 0) {
-      return res.status(400).json({
-        code: 400,
-        message: '续费时长(Times)必须为正整数'
-      });
-    }
-
-    if (speakerIDs && (!Array.isArray(speakerIDs) || speakerIDs.length === 0 || speakerIDs.length > 2000)) {
-      return res.status(400).json({
-        code: 400,
-        message: 'SpeakerID列表必须为非空数组且长度不超过2000'
-      });
-    }
-
-    // 调用服务层
-    const result = await voiceService.renewVoiceResourcePacks({
-      times,
-      speakerIDs,
-      autoUseCoupon,
-      couponID
-    });
-
-    res.json({
-      code: 200,
-      message: '续费成功',
-      data: result
-    });
-  } catch (error) {
-    console.error('音色续费接口异常:', error);
-    res.status(500).json({
-      code: 500,
-      message: error.message || '音色续费失败'
-    });
-  }
-};
-
-/**
- * 火山引擎原生接口 - 查询音色训练状态
- */
-export const megaTtsStatus = async (req, res) => {
-  try {
-    const { AppID, SpeakerIDs, State, OrderTimeStart, OrderTimeEnd, ExpireTimeStart, ExpireTimeEnd } = req.body;
-
-    // 参数验证
-    if (!AppID) {
-      return res.status(400).json({
-        ResponseMetadata: {
-          Error: {
-            Code: "OperationDenied.InvalidParameter",
-            Message: "缺少必填参数 AppID"
-          }
-        }
-      });
-    }
-
-    // 调用服务层
-    const result = await voiceService.listVoiceStatus({
-      appid: AppID,
-      speakerIDs: SpeakerIDs,
-      state: State,
-      orderTimeStart: OrderTimeStart,
-      orderTimeEnd: OrderTimeEnd,
-      expireTimeStart: ExpireTimeStart,
-      expireTimeEnd: ExpireTimeEnd
-    });
-
-    res.json({
-      ResponseMetadata: {
-        RequestId: req.headers['x-request-id'] || '',
-        Action: 'ListMegaTTSTrainStatus',
-        Version: '2023-11-07',
-        Service: 'speech_saas_prod',
-        Region: 'cn-north-1'
-      },
-      Result: result
-    });
-  } catch (error) {
-    console.error('查询音色状态接口异常:', error);
-    res.status(500).json({
-      ResponseMetadata: {
-        Error: {
-          Code: error.code || 'InternalError.NotCaptured',
-          Message: error.message || '未知错误'
-        }
-      }
-    });
-  }
-};
-
-/**
- * 批量查询音色训练状态
- */
-export const batchListMegaTTSTrainStatus = async (req, res) => {
-  try {
-    const { speakerIDs, state } = req.body;
-
-    // 参数验证
-    if (!speakerIDs || !Array.isArray(speakerIDs) || speakerIDs.length === 0) {
-      return res.status(400).json({
-        code: 400,
-        message: 'speakerIDs必须是非空数组'
-      });
-    }
-
-    if (speakerIDs.length > 100) {
-      return res.status(400).json({
-        code: 400,
-        message: '批量查询最多支持100个speakerID'
-      });
-    }
-
-    // 调用服务层
-    const result = await voiceService.listVoiceStatus({
-      speakerIDs,
-      state
-    });
-
-    res.json({
-      code: 200,
-      message: 'success',
-      data: result
-    });
-  } catch (error) {
-    console.error('批量查询音色状态接口异常:', error);
-    res.status(500).json({
-      code: 500,
-      message: error.message || '批量查询音色状态失败'
-    });
-  }
-};
-
-// 在默认导出中添加 batchListMegaTTSTrainStatus 方法
+// 在函数声明后再导出
 export default {
-    trainVoice,
-    listVoiceStatus,
-    orderVoiceResource,
-    renewVoiceResource,
-    synthesizeVoiceHttp,
-    batchListMegaTTSTrainStatus,
-    megaTtsStatus  // 添加此行
+  trainVoice,
+  getVoiceTrainingStatusHandler  // 现在函数已声明，可以安全引用
 };
+
+
+

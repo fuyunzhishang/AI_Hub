@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Voice Service API",
+    "version": "1.0.0",
+    "description": "语音服务API文档"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3099",
+      "description": "本地开发服务器"
+    }
+  ],
+  "tags": [
+    {
+      "name": "语音服务",
+      "description": "语音训练和查询相关接口"
+    }
+  ],
+  "paths": {
+    "/v1/voice/train": {
+      "post": {
+        "operationId": "trainVoice",
+        "summary": "提交音色训练任务",
+        "description": "上传音频文件并提交音色训练任务",
+        "tags": [
+          "语音服务"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "audio",
+                  "speaker_id"
+                ],
+                "properties": {
+                  "audio": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "音频文件 (支持wav、mp3、ogg、m4a、aac、pcm格式，最大10MB)"
+                  },
+                  "speaker_id": {
+                    "type": "string",
+                    "pattern": "^S_\\w+$",
+                    "description": "音色ID（必须以S_开头）"
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "训练文本"
+                  },
+                  "language": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "语言类型（0:中文, 1:英文）"
+                  },
+                  "model_type": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "模型类型"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "训练任务提交成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数错误"
+          },
+          "500": {
+            "description": "服务器错误"
+          }
+        }
+      }
+    },
+    "/v1/voice/training/status": {
+      "get": {
+        "operationId": "getVoiceTrainingStatus",
+        "summary": "查询音色训练状态",
+        "description": "根据 speaker_id 查询字节跳动音色训练任务的实时状态",
+        "tags": [
+          "语音服务"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "speaker_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^S_\\w+$"
+            },
+            "description": "音色 ID（必须以 S_ 开头）"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "提示信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "训练状态数据"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "参数错误"
+          },
+          "500": {
+            "description": "服务器错误"
+          }
+        }
+      }
+    }
+  }
+}

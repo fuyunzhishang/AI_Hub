@@ -27,7 +27,10 @@
       "Bash(timeout 10s npm start)",
       "Bash(timeout 5s npm run dev)",
       "Bash(grep:*)",
-      "Bash(timeout 3s npm run dev)"
+      "Bash(timeout 3s npm run dev)",
+      "Bash(timeout 5s npm start)",
+      "Bash(true)",
+      "Bash(node:*)"
     ],
     "deny": []
   }
