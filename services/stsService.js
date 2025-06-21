@@ -9,12 +9,16 @@ const buildResourcePath = (options) => {
   const { bucket, region, allowPrefix } = options;
   const prefix = allowPrefix === '*' ? '*' : (allowPrefix.startsWith('/') ? allowPrefix.substring(1) : allowPrefix);
 
-  // 分离 bucket 和 appid
-  const bucketParts = bucket.split('-');
-  const bucketName = bucketParts[0];
-  const appId = bucketParts[1];
+  // 从bucket名称中提取appId（通常是最后一个-后面的数字）
+  const parts = bucket.split('-');
+  const appId = parts[parts.length - 1];
+  
+  // 验证appId是否为纯数字
+  if (!/^\d+$/.test(appId)) {
+    throw new Error(`无法从bucket名称 ${bucket} 中提取有效的AppId`);
+  }
+  
   // 构建资源路径格式：qcs::cos:<region>:uid/<appid>:<bucket>/<prefix>
-  // 注意: 在资源路径中，应该是 appid + : + 完整bucket名称（包含appid）
   if (prefix === '*') {
     return `qcs::cos:${region}:uid/${appId}:${bucket}/*`;
   } else {

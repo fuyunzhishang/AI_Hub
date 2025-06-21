@@ -28,7 +28,8 @@
       "Bash(timeout 5s npm run dev)",
       "Bash(grep:*)",
       "Bash(timeout 3s npm run dev)",
-      "WebFetch(domain:ai.google.dev)"
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(node:*)"
     ],
     "deny": []
   }
