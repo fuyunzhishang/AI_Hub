@@ -100,16 +100,11 @@ export const getTemporaryKey = async (options = {}) => {  // 配置参数
     console.log('STS 请求配置:', {
       ...config,
       secretId: process.env.TENCENTCLOUD_SECRET_ID, // 隐藏敏感信息
-      secretKey: process.env.TENCENTCLOUD_SECRET_ID, // 隐藏敏感信息
+      secretKey: process.env.TENCENTCLOUD_SECRET_KEY, // 隐藏敏感信息
       policy: config.policy, // 显示策略内容
       resource: resource // 显示具体的资源路径
     });
 
-    // 对 bucket 进行格式检查 - 已在 buildResourcePath 中进行了分离
-    const bucketParts = config.bucket.split('-');
-    if (bucketParts.length !== 2 || isNaN(bucketParts[1])) {
-      throw new Error(`Bucket 格式不正确，应为 'bucketname-appid' 格式: ${config.bucket}`);
-    }
     try {
       const result = await STS.getCredential(config);
       console.log('临时密钥获取成功:', result);
