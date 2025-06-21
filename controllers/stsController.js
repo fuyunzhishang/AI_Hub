@@ -1,32 +1,25 @@
-import { getTemporaryKey } from '../services/stsService.js';
+import { getTemporaryKey } from '../services/stsService.js'
 
 /**
  * 获取腾讯云COS临时密钥
  */
 export const getSTSKey = async (req, res) => {
-  try {    // 从请求体中获取参数
+  try {
+    // 从请求体中获取参数
     const {
       bucket = process.env.TENCENTCLOUD_COS_DEFAULT_BUCKET,  // 从环境变量中获取默认值
       region = process.env.TENCENTCLOUD_COS_DEFAULT_REGION, // 从环境变量中获取默认区域
       allowPrefix = '*',  // 资源前缀，* 表示所有资源
-    } = req.body;
+    } = req.body
 
-    // 验证 bucket 格式（bucketName-appId）
-    const bucketParts = bucket.split('-');
-    if (bucketParts.length !== 2 || isNaN(bucketParts[1])) {
-      return res.status(400).json({
-        success: false,
-        error: '桶名格式错误',
-        details: `Bucket 格式应为 'bucketName-appId'，当前值: ${bucket}`
-      });
-    }
+    // 移除bucket格式验证，允许任何格式的bucket名称
 
     // 确保 durationSeconds 是数字类型
-    const durationSeconds = parseInt(req.body.durationSeconds) || 1800;
+    const durationSeconds = parseInt(req.body.durationSeconds) || 1800
 
     // 根据业务场景设置不同的权限
-    let allowActions = [];
-    const actionType = req.body.actionType || 'default';
+    let allowActions = []
+    const actionType = req.body.actionType || 'default'
 
     switch (actionType) {
       case 'upload':
@@ -38,22 +31,22 @@ export const getSTSKey = async (req, res) => {
           'cos:ListParts',
           'cos:UploadPart',
           'cos:CompleteMultipartUpload',
-        ];
-        break;
+        ]
+        break
       case 'download':
         // 仅下载权限
         allowActions = [
           'cos:GetObject',
-        ];
-        break;
+        ]
+        break
       case 'read':
         // 仅读取权限
         allowActions = [
           'cos:GetObject',
           'cos:GetBucket',
           'cos:HeadObject',
-        ];
-        break;
+        ]
+        break
       default:
         // 默认权限，包含上传和下载
         allowActions = [
@@ -65,7 +58,7 @@ export const getSTSKey = async (req, res) => {
           'cos:UploadPart',
           'cos:CompleteMultipartUpload',
           'cos:GetBucket',
-        ];
+        ]
     }    // 获取临时密钥
     const result = await getTemporaryKey({
       bucket,
