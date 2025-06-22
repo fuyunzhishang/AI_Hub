@@ -51,6 +51,10 @@ const options = {
       {
         name: '视频理解',
         description: '基于 Google Gemini 的视频内容分析'
+      },
+      {
+        name: 'TTS',
+        description: '通用文字转语音服务'
       }
     ]
   },

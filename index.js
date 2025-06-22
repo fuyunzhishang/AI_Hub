@@ -15,6 +15,7 @@ import digitalHumanRoutes from './routes/digitalHuman.js'
 import authVideoRoutes from './routes/authVideo.js'
 import videoUnderstandingRoutes from './routes/videoUnderstandingRoutes.js'
 import voiceRouter from './routes/voice.js'
+import ttsRoutes from './routes/tts.js'
 import tencentcloud from "tencentcloud-sdk-nodejs"
 
 // 加载环境变量
@@ -69,6 +70,7 @@ app.use('/api/credential', credentialRoutes)
 app.use('/api/digital-human', digitalHumanRoutes)
 app.use('/api/auth-video', authVideoRoutes)
 app.use('/api/video-understanding', videoUnderstandingRoutes)
+app.use('/api/tts', ttsRoutes)
 
 /**
  * @swagger
