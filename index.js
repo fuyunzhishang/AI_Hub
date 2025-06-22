@@ -1,57 +1,72 @@
 // 引入所需模块
-import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
-import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from './config/swagger.js';
-import audioRoutes from './routes/audio.js';
-import speechRoutes from './routes/speech.js';
-import stsRoutes from './routes/sts.js';
-import googleFilesRoutes from './routes/googleFiles.js';
-import credentialRoutes from './routes/credential.js';
-import digitalHumanRoutes from './routes/digitalHuman.js';
-import authVideoRoutes from './routes/authVideo.js';
-import videoUnderstandingRoutes from './routes/videoUnderstandingRoutes.js';
-import tencentcloud from "tencentcloud-sdk-nodejs";
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import swaggerUi from 'swagger-ui-express'
+import swaggerSpec from './config/swagger.js'
+import audioRoutes from './routes/audio.js'
+import speechRoutes from './routes/speech.js'
+import stsRoutes from './routes/sts.js'
+import googleFilesRoutes from './routes/googleFiles.js'
+import credentialRoutes from './routes/credential.js'
+import digitalHumanRoutes from './routes/digitalHuman.js'
+import authVideoRoutes from './routes/authVideo.js'
+import videoUnderstandingRoutes from './routes/videoUnderstandingRoutes.js'
+import tencentcloud from "tencentcloud-sdk-nodejs"
 
 // 加载环境变量
-dotenv.config();
+dotenv.config()
 
 // 获取当前文件的目录路径
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // 创建Express应用
-const app = express();
-const PORT = process.env.PORT || 3099;
+const app = express()
+const PORT = process.env.PORT || 3099
+
+// CORS配置 - 解决跨域问题
+const corsOptions = {
+  origin: function (origin, callback) {
+    // 允许所有来源（开发环境）
+    // 生产环境建议配置具体的域名
+    callback(null, true)
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}
+
+app.use(cors(corsOptions))
 
 // 中间件设置
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // 设置上传文件的目录为静态资源
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // Swagger API 文档
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 // 提供 OpenAPI 规范的 JSON 格式
 app.get('/api-docs.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
+  res.setHeader('Content-Type', 'application/json')
+  res.send(swaggerSpec)
+})
 
 // 路由设置
-app.use('/api/audio', audioRoutes);
-app.use('/api/speech', speechRoutes);
-app.use('/api/sts', stsRoutes);
-app.use('/api/google-files', googleFilesRoutes);
-app.use('/api/credential', credentialRoutes);
-app.use('/api/digital-human', digitalHumanRoutes);
-app.use('/api/auth-video', authVideoRoutes);
-app.use('/api/video-understanding', videoUnderstandingRoutes);
+app.use('/api/audio', audioRoutes)
+app.use('/api/speech', speechRoutes)
+app.use('/api/sts', stsRoutes)
+app.use('/api/google-files', googleFilesRoutes)
+app.use('/api/credential', credentialRoutes)
+app.use('/api/digital-human', digitalHumanRoutes)
+app.use('/api/auth-video', authVideoRoutes)
+app.use('/api/video-understanding', videoUnderstandingRoutes)
 
 /**
  * @swagger
@@ -78,8 +93,8 @@ app.use('/api/video-understanding', videoUnderstandingRoutes);
  */
 app.get('/api/test', async (req, res) => {
   // 首先检查是否配置了腾讯云密钥
-  const secretId = process.env.TENCENTCLOUD_SECRET_ID;
-  const secretKey = process.env.TENCENTCLOUD_SECRET_KEY;
+  const secretId = process.env.TENCENTCLOUD_SECRET_ID
+  const secretKey = process.env.TENCENTCLOUD_SECRET_KEY
   
   // 如果没有配置密钥或使用的是默认占位符，返回基础健康检查
   if (!secretId || !secretKey || 
@@ -92,7 +107,7 @@ app.get('/api/test', async (req, res) => {
       message: 'Service is running (Tencent Cloud not configured)',
       timestamp: new Date().toISOString(),
       tencentCloudConfigured: false
-    });
+    })
   }
 
   // 如果配置了密钥，测试腾讯云连接
