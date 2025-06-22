@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: Voice API
+  version: 1.0.0
+  description: 语音服务API
+servers:
+  - url: http://localhost:3099
+    description: 开发服务器
+tags:
+  - name: 语音服务
+    description: 语音训练相关接口
+paths:
+  /v1/voice/train:
+    post:
+      tags:
+        - 语音服务
+      summary: 提交音色训练任务
+      description: 上传音频文件并提交音色训练任务
+      operationId: trainVoice
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - audio
+                - speaker_id
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                  description: 音频文件 (支持wav、mp3、ogg、m4a、aac、pcm格式，最大10MB)
+                speaker_id:
+                  type: string
+                  pattern: "^S_\\w+$"
+                  description: 音色ID（必须以S_开头）
+                  example: S_12345678
+                text:
+                  type: string
+                  description: 训练文本
+                language:
+                  type: integer
+                  default: 0
+                  description: 语言类型（0:中文, 1:英文）
+                  enum: [0, 1]
+                model_type:
+                  type: integer
+                  default: 0
+                  description: 模型类型
+                  enum: [0, 1, 2, 3]
+      responses:
+        '200':
+          description: 训练任务提交成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 音色训练请求提交成功
+                  data:
+                    type: object
+                    properties:
+                      taskId:
+                        type: string
+                        description: 任务ID
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 缺少必填参数speaker_id
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: 音色训练请求处理失败
+                  details:
+                    type: string
+                  code:
+                    type: string
+
+  /v1/voice/training/status:
+    get:
+      tags:
+        - 语音服务
+      summary: 查询音色训练状态
+      description: 根据 speaker_id 查询字节跳动音色训练任务的实时状态
+      operationId: getVoiceTrainingStatus
+      parameters:
+        - in: query
+          name: speaker_id
+          required: true
+          schema:
+            type: string
+            pattern: "^S_\\w+$"
+          description: 音色 ID（必须以 S_ 开头）
+          example: S_12345678
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 0
+                    description: 状态码
+                  message:
+                    type: string
+                    example: success
+                    description: 提示信息
+                  data:
+                    type: object
+                    description: 训练状态数据
+                    properties:
+                      status:
+                        type: string
+                        description: 训练状态
+                        enum: [pending, processing, completed, failed]
+                      progress:
+                        type: integer
+                        description: 训练进度(0-100)
+                      result:
+                        type: object
+                        description: 训练结果
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: 无效的speaker_id参数，必须提供以S_开头的字符串类型音色ID
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: 获取训练状态失败

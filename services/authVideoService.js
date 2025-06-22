@@ -1,8 +1,10 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import fs from 'fs';
+import digitalHumanConfig from '../config/digitalHuman.js';
 
 const API_BASE_URL = 'https://api.16ai.vip';
+const BEARER_TOKEN = digitalHumanConfig.pomegranateToken;
 
 /**
  * 创建授权视频验证任务
@@ -40,6 +42,7 @@ export const createAuthVideo = async (videoPath, content, options = {}) => {
       headers: {
         ...formData.getHeaders(),
         'Content-Type': 'multipart/form-data',
+        'Authorization': BEARER_TOKEN
       },
       timeout: 30000, // 30秒超时
     });
@@ -80,6 +83,9 @@ export const queryAuthVideo = async (authId) => {
     }
 
     const response = await axios.get(`${API_BASE_URL}/api/auth-video/${authId}`, {
+      headers: {
+        'Authorization': BEARER_TOKEN
+      },
       timeout: 10000, // 10秒超时
     });
 
@@ -132,6 +138,7 @@ export const createAuthVideoByUrl = async (videoUrl, content, options = {}) => {
     const response = await axios.post(`${API_BASE_URL}/api/auth-video-url`, requestData, {
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': BEARER_TOKEN
       },
       timeout: 30000, // 30秒超时
     });

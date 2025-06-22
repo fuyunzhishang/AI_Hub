@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { createDigitalHumanService } from '../services/digitalHumanService.js';
+import digitalHumanConfig from '../config/digitalHuman.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,11 +11,18 @@ const __dirname = path.dirname(__filename);
  * 获取Bearer Token的辅助函数
  */
 const getBearerToken = (req) => {
+  // 优先使用请求头中的token，如果没有则使用配置的默认token
   const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new Error('缺少有效的Bearer Token');
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return authHeader.substring(7);
   }
-  return authHeader.substring(7);
+  
+  // 使用配置文件中的石榴token
+  if (digitalHumanConfig.pomegranateToken) {
+    return digitalHumanConfig.pomegranateToken.replace('Bearer ', '');
+  }
+  
+  throw new Error('缺少有效的Bearer Token');
 };
 
 /**

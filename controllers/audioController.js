@@ -3,6 +3,8 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { processTranscode, processExtract } from '../services/audioService.js';
 import { checkFFmpegInstallation, generateUserFriendlyError } from '../utils/ffmpegChecker.js';
+// 保持默认导入语法
+import digitalHumanConfig from '../config/digitalHuman.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
