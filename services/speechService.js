@@ -104,15 +104,33 @@ export const recognizeSpeech = async (filePath, EngineModelType = '16k_zh') => {
       // 等待任务完成
       const taskResult = await waitForTaskCompletion(client, data.Data.TaskId);
 
+      // 处理识别结果 - 兼容不同的返回格式
+      let recognizedText = '';
+      let wordCount = 0;
+      
+      if (taskResult.Data) {
+        // 优先使用 Result 字段（新格式）
+        if (taskResult.Data.Result) {
+          // Result 格式: "[0:0.000,0:20.781]  九七八万糖水铺作为..."
+          const resultMatch = taskResult.Data.Result.match(/\[[\d:.,]+\]\s*(.*)/);
+          recognizedText = resultMatch ? resultMatch[1].trim() : taskResult.Data.Result;
+        }
+        // 兼容 ResultDetail 字段（旧格式）
+        else if (taskResult.Data.ResultDetail && Array.isArray(taskResult.Data.ResultDetail)) {
+          recognizedText = taskResult.Data.ResultDetail.map(item => item.FinalSentence || '').join('');
+        }
+        
+        wordCount = recognizedText.length;
+      }
+
       return {
         success: true,
         result: taskResult,
-        text: taskResult.Data && taskResult.Data.ResultDetail ?
-          taskResult.Data.ResultDetail.map(item => item.FinalSentence).join('') : '',
+        text: recognizedText,
         taskId: data.Data.TaskId,
-        wordCount: taskResult.Data && taskResult.Data.ResultDetail ?
-          taskResult.Data.ResultDetail.reduce((acc, item) => acc + (item.FinalSentence ? item.FinalSentence.length : 0), 0) : 0,
+        wordCount: wordCount,
         audioFormat: params.AudioFormat,
+        audioDuration: taskResult.Data?.AudioDuration || 0,
       };
     } else {
       return {
@@ -196,17 +214,35 @@ export const recognizeSpeechByUrl = async (fileUrl, EngineModelType = '16k_zh') 
       // 等待任务完成
       const taskResult = await waitForTaskCompletion(client, data.Data.TaskId);
 
+      // 处理识别结果 - 兼容不同的返回格式
+      let recognizedText = '';
+      let wordCount = 0;
+      
+      if (taskResult.Data) {
+        // 优先使用 Result 字段（新格式）
+        if (taskResult.Data.Result) {
+          // Result 格式: "[0:0.000,0:20.781]  九七八万糖水铺作为..."
+          const resultMatch = taskResult.Data.Result.match(/\[[\d:.,]+\]\s*(.*)/);
+          recognizedText = resultMatch ? resultMatch[1].trim() : taskResult.Data.Result;
+        }
+        // 兼容 ResultDetail 字段（旧格式）
+        else if (taskResult.Data.ResultDetail && Array.isArray(taskResult.Data.ResultDetail)) {
+          recognizedText = taskResult.Data.ResultDetail.map(item => item.FinalSentence || '').join('');
+        }
+        
+        wordCount = recognizedText.length;
+      }
+
       return {
         success: true,
         result: taskResult,
-        text: taskResult.Data && taskResult.Data.ResultDetail ?
-          taskResult.Data.ResultDetail.map(item => item.FinalSentence).join('') : '',
+        text: recognizedText,
         taskId: data.Data.TaskId,
-        wordCount: taskResult.Data && taskResult.Data.ResultDetail ?
-          taskResult.Data.ResultDetail.reduce((acc, item) => acc + (item.FinalSentence ? item.FinalSentence.length : 0), 0) : 0,
+        wordCount: wordCount,
         sourceType: 'url',
         url: fileUrl,
-        urlValidation: urlValidation
+        urlValidation: urlValidation,
+        audioDuration: taskResult.Data?.AudioDuration || 0,
       };
     } else {
       return {

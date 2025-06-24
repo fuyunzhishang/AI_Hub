@@ -22,14 +22,23 @@ const storage = multer.diskStorage({
 
 // 文件过滤器，只允许音频文件
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /wav|mp3|m4a|flv|mp4|wma|3gp|amr|aac|ogg-opus|flac/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = file.mimetype.includes('audio') || file.mimetype.includes('video');
+  // 支持的文件扩展名
+  const allowedExtensions = ['wav', 'mp3', 'm4a', 'flv', 'mp4', 'wma', '3gp', 'amr', 'aac', 'ogg', 'opus', 'flac'];
+  const fileExt = path.extname(file.originalname).toLowerCase().replace('.', '');
+  const hasValidExtension = allowedExtensions.includes(fileExt);
+  
+  // 支持的 MIME 类型
+  const allowedMimeTypes = [
+    'audio/', 'video/', 'application/ogg', 'application/octet-stream'
+  ];
+  const hasValidMimeType = allowedMimeTypes.some(type => file.mimetype.includes(type));
+  
+  console.log(`文件验证 - 文件名: ${file.originalname}, 扩展名: ${fileExt}, MIME: ${file.mimetype}, 扩展名有效: ${hasValidExtension}, MIME有效: ${hasValidMimeType}`);
 
-  if (extname && mimetype) {
+  if (hasValidExtension || hasValidMimeType) {
     return cb(null, true);
   } else {
-    cb(new Error('只允许上传音频/视频文件!'));
+    cb(new Error(`不支持的文件格式。支持的格式: ${allowedExtensions.join(', ')}`));
   }
 };
 
