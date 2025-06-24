@@ -1,34 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm install:*)",
-      "Bash(npm start)",
-      "Bash(pkill:*)",
-      "Bash(mkdir:*)",
-      "Bash(ls:*)",
-      "Bash(touch:*)",
-      "Bash(rm:*)",
-      "Bash(npm uninstall:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git config:*)",
-      "Bash(git pull:*)",
-      "Bash(git fetch:*)",
-      "Bash(chmod:*)",
-      "Bash(git push:*)",
-      "Bash(mv:*)",
+      "Bash(ls:*)",
+      "Bash(npm start)",
+      "Bash(node:*)",
+      "Bash(npm install)",
       "Bash(curl:*)",
-      "Bash(cat:*)",
-      "Bash(find:*)",
-      "WebFetch(domain:api.16ai.vip)",
-      "WebFetch(domain:api.16ai.vip)",
-      "WebFetch(domain:api.16ai.vip)",
-      "Bash(npm:*)",
-      "Bash(timeout 10s npm start)",
-      "Bash(timeout 5s npm run dev)",
       "Bash(grep:*)",
-      "Bash(timeout 3s npm run dev)",
-      "WebFetch(domain:ai.google.dev)"
+      "Bash(find:*)"
     ],
     "deny": []
   }

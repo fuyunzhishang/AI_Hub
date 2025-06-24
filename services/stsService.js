@@ -9,12 +9,16 @@ const buildResourcePath = (options) => {
   const { bucket, region, allowPrefix } = options;
   const prefix = allowPrefix === '*' ? '*' : (allowPrefix.startsWith('/') ? allowPrefix.substring(1) : allowPrefix);
 
-  // 分离 bucket 和 appid
-  const bucketParts = bucket.split('-');
-  const bucketName = bucketParts[0];
-  const appId = bucketParts[1];
+  // 从bucket名称中提取appId（通常是最后一个-后面的数字）
+  const parts = bucket.split('-');
+  const appId = parts[parts.length - 1];
+
+  // 验证appId是否为纯数字
+  if (!/^\d+$/.test(appId)) {
+    throw new Error(`无法从bucket名称 ${bucket} 中提取有效的AppId`);
+  }
+
   // 构建资源路径格式：qcs::cos:<region>:uid/<appid>:<bucket>/<prefix>
-  // 注意: 在资源路径中，应该是 appid + : + 完整bucket名称（包含appid）
   if (prefix === '*') {
     return `qcs::cos:${region}:uid/${appId}:${bucket}/*`;
   } else {
@@ -28,17 +32,17 @@ const buildResourcePath = (options) => {
  * @returns {Promise<Object>} - 临时密钥信息
  */
 export const getTemporaryKey = async (options = {}) => {  // 配置参数
+  // 在 getTemporaryKey 函数中
   const config = {
     secretId: process.env.TENCENTCLOUD_SECRET_ID,
     secretKey: process.env.TENCENTCLOUD_SECRET_KEY,
     proxy: '',
-    host: 'sts.tencentcloudapi.com', // 临时密钥服务域名，默认为 sts.tencentcloudapi.com
+    host: 'sts.tencentcloudapi.com',
 
-    // 放行判断相关参数
-    bucket: options.bucket || process.env.TENCENTCLOUD_COS_DEFAULT_BUCKET,
-    region: options.region || process.env.TENCENTCLOUD_COS_DEFAULT_REGION,
+    // 移除默认值，强制从参数传递
+    bucket: options.bucket, // 移除 || process.env.TENCENTCLOUD_COS_DEFAULT_BUCKET
+    region: options.region, // 移除 || process.env.TENCENTCLOUD_COS_DEFAULT_REGION
 
-    // 密钥有效期 - 确保是数字类型
     durationSeconds: parseInt(options.durationSeconds) || 1800,
     // 授予的权限
     allowActions: options.allowActions || [
@@ -60,6 +64,15 @@ export const getTemporaryKey = async (options = {}) => {  // 配置参数
     // 限制的资源前缀
     allowPrefix: options.allowPrefix || '*',
   };
+
+  // 添加参数验证
+  if (!config.bucket) {
+    throw new Error('bucket 参数是必需的');
+  }
+  if (!config.region) {
+    throw new Error('region 参数是必需的');
+  }
+
   // 获取临时密钥
   try {
     // 格式化请求资源
@@ -86,17 +99,12 @@ export const getTemporaryKey = async (options = {}) => {  // 配置参数
     };
     console.log('STS 请求配置:', {
       ...config,
-      secretId: '***', // 隐藏敏感信息
-      secretKey: '***', // 隐藏敏感信息
+      secretId: process.env.TENCENTCLOUD_SECRET_ID, // 隐藏敏感信息
+      secretKey: process.env.TENCENTCLOUD_SECRET_KEY, // 隐藏敏感信息
       policy: config.policy, // 显示策略内容
       resource: resource // 显示具体的资源路径
     });
 
-    // 对 bucket 进行格式检查 - 已在 buildResourcePath 中进行了分离
-    const bucketParts = config.bucket.split('-');
-    if (bucketParts.length !== 2 || isNaN(bucketParts[1])) {
-      throw new Error(`Bucket 格式不正确，应为 'bucketname-appid' 格式: ${config.bucket}`);
-    }
     try {
       const result = await STS.getCredential(config);
       console.log('临时密钥获取成功:', result);

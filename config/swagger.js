@@ -51,10 +51,17 @@ const options = {
       {
         name: '视频理解',
         description: '基于 Google Gemini 的视频内容分析'
+      },
+      {
+        name: 'TTS',
+        description: '通用文字转语音服务'
       }
     ]
   },
-  apis: ['./routes/*.js'], // 指定包含 API 注释的文件路径
+  apis: [
+    './routes/*.js',          // 保留路由文件扫描
+    './controllers/*.js'      // 添加控制器文件扫描
+  ],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
