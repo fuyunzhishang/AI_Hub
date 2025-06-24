@@ -27,17 +27,23 @@ const fileFilter = (req, file, cb) => {
   const fileExt = path.extname(file.originalname).toLowerCase().replace('.', '');
   const hasValidExtension = allowedExtensions.includes(fileExt);
   
-  // 支持的 MIME 类型
-  const allowedMimeTypes = [
-    'audio/', 'video/', 'application/ogg', 'application/octet-stream'
-  ];
-  const hasValidMimeType = allowedMimeTypes.some(type => file.mimetype.includes(type));
+  // 日志输出，帮助调试
+  console.log(`文件验证 - 文件名: ${file.originalname}, 扩展名: ${fileExt}, MIME: ${file.mimetype}`);
   
-  console.log(`文件验证 - 文件名: ${file.originalname}, 扩展名: ${fileExt}, MIME: ${file.mimetype}, 扩展名有效: ${hasValidExtension}, MIME有效: ${hasValidMimeType}`);
-
-  if (hasValidExtension || hasValidMimeType) {
+  // 只根据文件扩展名判断，忽略 MIME 类型（因为不同浏览器/客户端可能发送不同的 MIME）
+  if (hasValidExtension) {
     return cb(null, true);
   } else {
+    // 如果扩展名不在列表中，但文件名包含音频相关关键词，也允许通过
+    const filenameLower = file.originalname.toLowerCase();
+    const audioKeywords = ['audio', 'voice', 'sound', 'recording', 'speech'];
+    const hasAudioKeyword = audioKeywords.some(keyword => filenameLower.includes(keyword));
+    
+    if (hasAudioKeyword) {
+      console.log('文件名包含音频关键词，允许上传');
+      return cb(null, true);
+    }
+    
     cb(new Error(`不支持的文件格式。支持的格式: ${allowedExtensions.join(', ')}`));
   }
 };
