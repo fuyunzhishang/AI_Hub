@@ -22,22 +22,22 @@ const storage = multer.diskStorage({
 
 // 文件过滤器，只允许音频文件
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /wav|mp3|silk|m4a|aac|flac/;
+  const allowedTypes = /wav|mp3|m4a|flv|mp4|wma|3gp|amr|aac|ogg-opus|flac/;
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = file.mimetype.includes('audio');
-  
+  const mimetype = file.mimetype.includes('audio') || file.mimetype.includes('video');
+
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb(new Error('只允许上传音频文件!'));
+    cb(new Error('只允许上传音频/视频文件!'));
   }
 };
 
 // 配置 multer
-const upload = multer({ 
+const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 100 * 1024 * 1024 } // 限制文件大小为 100MB，大文件会自动上传到COS
+  limits: { fileSize: 1 * 1024 * 1024 * 1024 } // 限制文件大小为 2GB，大文件会自动上传到COS
 });
 
 /**
@@ -56,7 +56,7 @@ const upload = multer({
  *               audio:
  *                 type: string
  *                 format: binary
- *                 description: 音频文件 (支持 wav, mp3, silk, m4a, aac, flac，最大100MB，大于5MB自动上传到COS)
+ *                 description: 音频文件 (支持 wav, mp3, m4a, flv, mp4, wma, 3gp, amr, aac, ogg-opus, flac，最大2GB，大于5MB自动上传到COS)
  *               engineType:
  *                 type: string
  *                 enum: [16k_zh, 16k_zh_dialect, 16k_en, 16k_ca]
