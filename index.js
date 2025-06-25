@@ -17,6 +17,8 @@ import videoUnderstandingRoutes from './routes/videoUnderstandingRoutes.js'
 import voiceRouter from './routes/voice.js'
 import ttsRoutes from './routes/tts.js'
 import tencentcloud from "tencentcloud-sdk-nodejs"
+import logger from './utils/logger.js'
+import requestLogger, { responseLogger } from './middleware/requestLogger.js'
 
 // 加载环境变量
 dotenv.config()
@@ -31,7 +33,8 @@ const ensureDirectories = () => {
   const dirs = [
     path.join(__dirname, 'uploads'),
     path.join(__dirname, 'uploads', 'voice'),
-    path.join(__dirname, 'public')
+    path.join(__dirname, 'public'),
+    path.join(__dirname, 'logs')
   ]
   
   dirs.forEach(dir => {
@@ -62,6 +65,10 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+
+// 添加请求日志中间件
+app.use(requestLogger)
+app.use(responseLogger)
 
 // 中间件设置
 // 注意：对于文件上传路由，不要预先解析请求体，让 multer 处理
@@ -201,7 +208,15 @@ app.get('/cos-demo', (req, res) => {
 
 // 全局错误处理中间件
 app.use((error, req, res, next) => {
-  console.error('全局错误处理:', error.message);
+  // 使用 logger 记录错误
+  logger.error(`全局错误处理: ${error.message}`, {
+    method: req.method,
+    url: req.originalUrl,
+    ip: req.ip,
+    headers: req.headers,
+    body: req.body,
+    stack: error.stack
+  });
   
   // 处理 Multer 相关错误
   if (error.code === 'LIMIT_FILE_SIZE') {
@@ -257,8 +272,10 @@ app.use('*', (req, res) => {
 
 // 启动服务器
 app.listen(PORT, () => {
-  console.log(`🚀 服务器已启动，端口号：${PORT}`);
-  console.log(`📖 API 文档: http://localhost:${PORT}/api-docs`);
-  console.log(`🎤 语音识别演示: http://localhost:${PORT}/cos-demo`);
-  console.log(`🔍 服务测试: http://localhost:${PORT}/api/test`);
+  logger.info(`🚀 服务器已启动，端口号：${PORT}`);
+  logger.info(`📖 API 文档: http://localhost:${PORT}/api-docs`);
+  logger.info(`🎤 语音识别演示: http://localhost:${PORT}/cos-demo`);
+  logger.info(`🔍 服务测试: http://localhost:${PORT}/api/test`);
+  logger.info(`📁 日志目录: ${path.join(__dirname, 'logs')}`);
+  logger.info(`🌍 环境: ${process.env.NODE_ENV || 'development'}`);
 });

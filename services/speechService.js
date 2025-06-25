@@ -2,6 +2,7 @@ import tencentcloud from "tencentcloud-sdk-nodejs";
 import fs from 'fs';
 import path from 'path';
 import { getValidTencentCloudCredentials } from '../utils/credentialManager.js';
+import logger from '../utils/logger.js';
 
 // 导入腾讯云语音识别客户端
 const AsrClient = tencentcloud.asr.v20190614.Client;
@@ -143,7 +144,7 @@ export const recognizeSpeech = async (filePath, EngineModelType = '16k_zh') => {
       };
     }
   } catch (error) {
-    console.error('语音识别错误:', error);
+    logger.error('语音识别错误:', error);
     throw new Error(`语音识别失败: ${error.message}`);
   }
 };
@@ -161,15 +162,15 @@ export const recognizeSpeechByUrl = async (fileUrl, EngineModelType = '16k_zh') 
     const { validateUrl } = await import('./cosService.js');
 
     // 验证URL是否可访问
-    console.log('验证COS文件URL是否可访问...');
+    logger.debug('验证COS文件URL是否可访问...');
     const urlValidation = await validateUrl(fileUrl);
 
     if (!urlValidation.accessible) {
-      console.error('COS文件URL不可访问:', urlValidation);
+      logger.error('COS文件URL不可访问:', urlValidation);
       throw new Error(`COS文件无法访问: ${urlValidation.error} (状态码: ${urlValidation.status || 'N/A'})`);
     }
 
-    console.log('COS文件URL验证成功:', {
+    logger.debug('COS文件URL验证成功:', {
       url: fileUrl,
       contentType: urlValidation.contentType,
       contentLength: urlValidation.contentLength
@@ -205,9 +206,9 @@ export const recognizeSpeechByUrl = async (fileUrl, EngineModelType = '16k_zh') 
       ConvertNumMode: 0, // 是否进行阿拉伯数字智能转换，0：不转换，1：转换
     };
 
-    console.log(`发送URL语音识别请求，引擎类型: ${EngineModelType}, 文件URL: ${fileUrl}`);
+    logger.info(`发送URL语音识别请求，引擎类型: ${EngineModelType}, 文件URL: ${fileUrl}`);
     const data = await client.CreateRecTask(params);
-    console.log('URL语音识别请求响应:', JSON.stringify(data));
+    logger.debug('URL语音识别请求响应:', JSON.stringify(data));
 
     // CreateRecTask返回的是任务ID，需要等待任务完成并获取结果
     if (data && data.Data && data.Data.TaskId) {
@@ -257,7 +258,7 @@ export const recognizeSpeechByUrl = async (fileUrl, EngineModelType = '16k_zh') 
       };
     }
   } catch (error) {
-    console.error('URL语音识别错误:', error);
+    logger.error('URL语音识别错误:', error);
     throw new Error(`URL语音识别失败: ${error.message}`);
   }
 };
