@@ -25,6 +25,26 @@ dotenv.config()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+// 确保必要的目录存在
+import fs from 'fs'
+const ensureDirectories = () => {
+  const dirs = [
+    path.join(__dirname, 'uploads'),
+    path.join(__dirname, 'uploads', 'voice'),
+    path.join(__dirname, 'public')
+  ]
+  
+  dirs.forEach(dir => {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true })
+      console.log(`创建目录: ${dir}`)
+    }
+  })
+}
+
+// 在应用启动时创建必要目录
+ensureDirectories()
+
 // 创建Express应用
 const app = express()
 const PORT = process.env.PORT || 3099
@@ -44,9 +64,24 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 // 中间件设置
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+// 注意：对于文件上传路由，不要预先解析请求体，让 multer 处理
 app.use(express.static(path.join(__dirname, 'public')))
+
+// 只对非文件上传的路由使用 JSON 和 URL 编码解析
+app.use((req, res, next) => {
+  // 如果是文件上传相关的路由，跳过 JSON 和 URL 编码解析
+  if (req.path.includes('/speech/recognize') || 
+      req.path.includes('/voice/train') || 
+      req.path.includes('/audio/') ||
+      req.headers['content-type']?.includes('multipart/form-data')) {
+    return next();
+  }
+  
+  // 对其他路由应用 JSON 和 URL 编码解析
+  express.json()(req, res, () => {
+    express.urlencoded({ extended: true })(req, res, next);
+  });
+})
 
 // 设置上传文件的目录为静态资源
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
@@ -164,7 +199,66 @@ app.get('/cos-demo', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'cos-demo.html'));
 });
 
+// 全局错误处理中间件
+app.use((error, req, res, next) => {
+  console.error('全局错误处理:', error.message);
+  
+  // 处理 Multer 相关错误
+  if (error.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({
+      success: false,
+      error: '文件大小超出限制',
+      details: '文件大小不能超过1GB'
+    });
+  }
+  
+  if (error.code === 'LIMIT_UNEXPECTED_FILE') {
+    return res.status(400).json({
+      success: false,
+      error: '意外的文件字段',
+      details: '请检查文件上传字段名称'
+    });
+  }
+  
+  if (error.message && error.message.includes('Multipart: Boundary not found')) {
+    return res.status(400).json({
+      success: false,
+      error: 'Multipart 数据格式错误',
+      details: '请确保使用正确的 Content-Type: multipart/form-data 格式上传文件',
+      suggestion: '如果使用 curl，请添加 -F 参数；如果使用 Postman，请选择 form-data 格式'
+    });
+  }
+  
+  // 其他错误
+  res.status(500).json({
+    success: false,
+    error: '服务器内部错误',
+    details: process.env.NODE_ENV === 'production' ? '请联系管理员' : error.message
+  });
+});
+
+// 404 处理
+app.use('*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    error: '接口不存在',
+    path: req.originalUrl,
+    method: req.method,
+    availableEndpoints: [
+      'GET /',
+      'GET /cos-demo',
+      'GET /api-docs',
+      'GET /api/test',
+      'POST /api/speech/recognize',
+      'POST /v1/voice/train'
+    ]
+  });
+});
+
 // 启动服务器
 app.listen(PORT, () => {
-  console.log(`服务器已启动，端口号：${PORT}`);
+  console.log(`🚀 服务器已启动，端口号：${PORT}`);
+  console.log(`📖 API 文档: http://localhost:${PORT}/api-docs`);
+  console.log(`🎤 语音识别演示: http://localhost:${PORT}/cos-demo`);
+  console.log(`🔍 服务测试: http://localhost:${PORT}/api/test`);
 });
