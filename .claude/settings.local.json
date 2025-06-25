@@ -8,7 +8,8 @@
       "Bash(npm install)",
       "Bash(curl:*)",
       "Bash(grep:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

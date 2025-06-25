@@ -27,7 +27,7 @@
     "cos-nodejs-sdk-v5": "^2.16.0-beta.3",
     "dotenv": "^16.5.0",
     "edf-parser": "^0.2.4",
-    "express": "^5.1.0",
+    "express": "^4.21.2",
     "fluent-ffmpeg": "^2.1.3",
     "form-data": "^4.0.3",
     "moment": "^2.30.1",
