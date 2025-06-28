@@ -8,8 +8,8 @@ services:
     ports:
       - "80:3099"
     volumes:
-      - ./uploads:/app/uploads:rw
-      - ./logs:/app/logs:rw
+      - uploads_data:/app/uploads
+      - logs_data:/app/logs
     env_file:
       - ./.env
     environment:
@@ -23,6 +23,10 @@ services:
       start_period: 40s
     networks:
       - ai-hub-network
+
+volumes:
+  uploads_data:
+  logs_data:
 
 networks:
   ai-hub-network:
