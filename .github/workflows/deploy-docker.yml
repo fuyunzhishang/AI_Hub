@@ -157,7 +157,7 @@ jobs:
           fi
           
           # HTTP 健康检查
-          HEALTH_URL="http://localhost:3099/api/test"
+          HEALTH_URL="http://localhost:80/api/test"
           MAX_ATTEMPTS=10
           ATTEMPT=1
           
@@ -173,7 +173,9 @@ jobs:
               
               # 显示端口监听
               echo "端口监听状态："
-              netstat -tlpn | grep :3099 || ss -tlpn | grep :3099 || true
+              netstat -tlpn | grep :80 || ss -tlpn | grep :80 || true
+              echo "容器内端口监听状态："
+              docker exec ai-hub netstat -tlpn | grep :3099 || docker exec ai-hub ss -tlpn | grep :3099 || true
               
               exit 0
             else
