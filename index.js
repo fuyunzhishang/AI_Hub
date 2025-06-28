@@ -38,9 +38,20 @@ const ensureDirectories = () => {
   ]
   
   dirs.forEach(dir => {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true })
-      console.log(`创建目录: ${dir}`)
+    try {
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true })
+        console.log(`✅ 创建目录成功: ${dir}`)
+      }
+    } catch (error) {
+      if (error.code === 'EACCES') {
+        console.warn(`⚠️  权限不足，无法创建目录: ${dir}`)
+        console.warn(`请确保容器有写权限，或在启动前预创建此目录`)
+      } else {
+        console.error(`❌ 创建目录失败: ${dir}`, error.message)
+      }
+      // 不要因为目录创建失败就终止应用启动
+      // 继续运行，让用户知道问题所在
     }
   })
 }
