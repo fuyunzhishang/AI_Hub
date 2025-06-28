@@ -6,7 +6,7 @@ services:
     container_name: ai-hub
     restart: unless-stopped
     ports:
-      - "3099:3099"
+      - "80:3099"
     volumes:
       - ./uploads:/app/uploads:rw
       - ./logs:/app/logs:rw
