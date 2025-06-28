@@ -10,7 +10,16 @@
       "Bash(grep:*)",
       "Bash(find:*)",
       "Bash(node:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(npm install:*)",
+      "Bash(apt:*)",
+      "Bash(apt install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(rm:*)",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(rg:*)",
+      "Bash(pkill:*)",
+      "Bash(true)"
     ],
     "deny": []
   }

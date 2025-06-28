@@ -18,7 +18,7 @@ import ttsService from '../services/ttsService.js'
  *         name: provider
  *         schema:
  *           type: string
- *           enum: [all, microsoft]
+ *           enum: [all, microsoft, microsoft-api, google, google-genai]
  *           default: all
  *         description: TTS提供商
  *       - in: query
@@ -71,9 +71,9 @@ import ttsService from '../services/ttsService.js'
 export const getVoices = async (req, res) => {
   try {
     const { provider = 'all', language = 'all' } = req.query
-    
+
     const voices = await ttsService.getVoiceList(provider, language)
-    
+
     res.json({
       success: true,
       data: voices
@@ -105,8 +105,8 @@ export const getVoices = async (req, res) => {
  *             properties:
  *               provider:
  *                 type: string
- *                 enum: [microsoft]
- *                 default: microsoft
+ *                 enum: [microsoft, microsoft-api, google-genai]
+ *                 default: microsoft-api
  *                 description: TTS提供商
  *               text:
  *                 type: string
@@ -176,7 +176,7 @@ export const getVoices = async (req, res) => {
 export const synthesizeSpeech = async (req, res) => {
   try {
     const { provider = 'microsoft', text, voiceId, speed = 1.0, pitch = 1.0, volume = 1.0, format = 'mp3' } = req.body
-    
+
     // 参数验证
     if (!text || !voiceId) {
       return res.status(400).json({
@@ -184,14 +184,14 @@ export const synthesizeSpeech = async (req, res) => {
         message: 'Text and voiceId are required'
       })
     }
-    
+
     if (text.length > 5000) {
       return res.status(400).json({
         success: false,
         message: 'Text length cannot exceed 5000 characters'
       })
     }
-    
+
     // 调用TTS服务
     const result = await ttsService.synthesize({
       provider,
@@ -202,7 +202,7 @@ export const synthesizeSpeech = async (req, res) => {
       volume,
       format
     })
-    
+
     res.json(result)
   } catch (error) {
     console.error('Synthesize speech error:', error)
@@ -250,14 +250,18 @@ export const getProviders = async (req, res) => {
         name: 'Microsoft Azure TTS',
         status: process.env.MICROSOFT_SPEECH_KEY ? 'active' : 'inactive'
       },
-      // 可以添加其他提供商
-      // {
-      //   id: 'google',
-      //   name: 'Google Cloud TTS',
-      //   status: process.env.GOOGLE_CLOUD_KEY ? 'active' : 'inactive'
-      // }
+      {
+        id: 'microsoft-api',
+        name: 'Microsoft TTS API',
+        status: 'active'  // 始终可用的微软TTS API
+      },
+      {
+        id: 'google-genai',
+        name: 'Google GenAI TTS',
+        status: process.env.GOOGLE_API_KEY ? 'active' : 'inactive'
+      }
     ]
-    
+
     res.json({
       success: true,
       data: providers

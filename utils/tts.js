@@ -10,7 +10,8 @@ export const ttsList = [
         name: '云希',
         lang: '中文(普通话，简体)',
         en_lang: 'Chinese (Mandarin, Simplified)',
-        level: 1
+        level: 1,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-CN-YunyangNeural',
@@ -21,7 +22,8 @@ export const ttsList = [
         name: '云扬',
         lang: '中文(普通话，简体)',
         en_lang: 'Chinese (Mandarin, Simplified)',
-        level: 1
+        level: 1,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-CN-YunxiaNeural',
@@ -32,7 +34,8 @@ export const ttsList = [
         name: '云夏',
         lang: '中文(普通话，简体)',
         en_lang: 'Chinese (Mandarin, Simplified)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-CN-YunjianNeural',
@@ -43,7 +46,8 @@ export const ttsList = [
         name: '云健',
         lang: '中文(普通话，简体)',
         en_lang: 'Chinese (Mandarin, Simplified)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-CN-XiaoyiNeural',
@@ -54,7 +58,8 @@ export const ttsList = [
         name: '晓伊',
         lang: '中文(普通话，简体)',
         en_lang: 'Chinese (Mandarin, Simplified)',
-        level: 1
+        level: 1,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-CN-XiaoxiaoNeural',
@@ -65,7 +70,8 @@ export const ttsList = [
         name: '晓晓',
         lang: '中文(普通话，简体)',
         en_lang: 'Chinese (Mandarin, Simplified)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-CN-liaoning-XiaobeiNeural',
@@ -76,7 +82,8 @@ export const ttsList = [
         name: '晓北',
         lang: '中文(东北官话，简体)',
         en_lang: 'Chinese (Northeast official, simplified)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-CN-shaanxi-XiaoniNeural',
@@ -87,7 +94,8 @@ export const ttsList = [
         name: '晓妮',
         lang: '中文(中原官话陕西，简体)',
         en_lang: 'Chinese (Central Plains Mandarin Shaanxi, Simplified)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-TW-YunJheNeural',
@@ -98,7 +106,8 @@ export const ttsList = [
         name: '雲哲',
         lang: '中文(台湾普通话)',
         en_lang: 'Chinese (Mandarin in Taiwan)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-TW-HsiaoYuNeural',
@@ -109,7 +118,8 @@ export const ttsList = [
         name: '曉雨',
         lang: '中文(台湾普通话)',
         en_lang: 'Chinese (Mandarin in Taiwan)',
-        level: 3
+        level: 3,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-TW-HsiaoChenNeural',
@@ -120,7 +130,8 @@ export const ttsList = [
         name: '曉臻',
         lang: '中文(台湾普通话)',
         en_lang: 'Chinese (Mandarin in Taiwan)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-HK-WanLungNeural',
@@ -131,7 +142,8 @@ export const ttsList = [
         name: '雲龍',
         lang: '中文(粤语，繁体)',
         en_lang: 'Chinese (Cantonese, Traditional)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-HK-HiuMaanNeural',
@@ -142,7 +154,8 @@ export const ttsList = [
         name: '曉曼',
         lang: '中文(粤语，繁体)',
         en_lang: 'Chinese (Cantonese, Traditional)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'zh-HK-HiuGaaiNeural',
@@ -153,7 +166,8 @@ export const ttsList = [
         name: '曉佳',
         lang: '中文(粤语，繁体)',
         en_lang: 'Chinese (Cantonese, Traditional)',
-        level: 2
+        level: 2,
+        type: 'microsoft-api'
       },
       {
         key: 'en-US-SteffanNeural',
@@ -3144,6 +3158,368 @@ export const ttsList = [
         name: 'Adri',
         lang: '南非荷兰语(南非)',
         en_lang: 'South African Dutch (South Africa)'
+      }
+    ],
+    googleGenAI: [
+      {
+        key: 'Zephyr',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Zephyr (明亮)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Bright'
+      },
+      {
+        key: 'Puck',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Puck (乐观)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Upbeat'
+      },
+      {
+        key: 'Charon',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Charon (信息型)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Informative'
+      },
+      {
+        key: 'Kore',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Kore (坚定)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Firm'
+      },
+      {
+        key: 'Fenrir',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Fenrir (兴奋)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Excitable'
+      },
+      {
+        key: 'Leda',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Leda (年轻)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Youthful'
+      },
+      {
+        key: 'Orus',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Orus (坚定)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Firm'
+      },
+      {
+        key: 'Aoede',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Aoede (轻快)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Breezy'
+      },
+      {
+        key: 'Callirrhoe',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Callirrhoe (随和)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Easy-going'
+      },
+      {
+        key: 'Autonoe',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Autonoe (明亮)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Bright'
+      },
+      {
+        key: 'Enceladus',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Enceladus (呼吸感)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Breathy'
+      },
+      {
+        key: 'Iapetus',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Iapetus (清晰)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Clear'
+      },
+      {
+        key: 'Umbriel',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Umbriel (随和)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Easy-going'
+      },
+      {
+        key: 'Algieba',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Algieba (流畅)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Smooth'
+      },
+      {
+        key: 'Despina',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Despina (流畅)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Smooth'
+      },
+      {
+        key: 'Erinome',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Erinome (清晰)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Clear'
+      },
+      {
+        key: 'Algenib',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Algenib (沙哑)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Gravelly'
+      },
+      {
+        key: 'Rasalgethi',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Rasalgethi (信息型)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Informative'
+      },
+      {
+        key: 'Laomedeia',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Laomedeia (乐观)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Upbeat'
+      },
+      {
+        key: 'Achernar',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Achernar (柔和)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Soft'
+      },
+      {
+        key: 'Alnilam',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Alnilam (坚定)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Firm'
+      },
+      {
+        key: 'Schedar',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Schedar (平稳)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Even'
+      },
+      {
+        key: 'Gacrux',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Gacrux (成熟)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Mature'
+      },
+      {
+        key: 'Pulcherrima',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Pulcherrima (前卫)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Forward'
+      },
+      {
+        key: 'Achird',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Achird (友好)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Friendly'
+      },
+      {
+        key: 'Zubenelgenubi',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Zubenelgenubi (随意)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Casual'
+      },
+      {
+        key: 'Vindemiatrix',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Vindemiatrix (温和)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Gentle'
+      },
+      {
+        key: 'Sadachbia',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Sadachbia (活泼)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Lively'
+      },
+      {
+        key: 'Sadaltager',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Sadaltager (博学)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Knowledgeable'
+      },
+      {
+        key: 'Sulafat',
+        example_voice_url: 'https://aistudio.google.com/generate-speech',
+        icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
+        sex: 'Neutral',
+        name: 'Sulafat (温暖)',
+        lang: '多语言支持',
+        en_lang: 'Multi-language Support',
+        level: 2,
+        type: 'google-genai',
+        characteristic: 'Warm'
       }
     ]
   }
