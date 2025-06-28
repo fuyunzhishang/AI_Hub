@@ -22,18 +22,15 @@ RUN npm ci
 # 复制应用代码
 COPY . .
 
-# 如果有构建步骤，在这里执行
-# RUN npm run build
-
 # 生产阶段
 FROM node:20-alpine
 
 # 只安装运行时依赖
 RUN apk add --no-cache ffmpeg
 
-# 创建非 root 用户
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
+# 创建非 root 用户，使用与宿主机匹配的 UID/GID
+RUN addgroup -g 1000 -S nodejs && \
+    adduser -S nodejs -u 1000 -G nodejs
 
 # 设置工作目录
 WORKDIR /app
@@ -45,7 +42,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --chown=nodejs:nodejs . .
 
 # 创建必要的目录并设置权限
-RUN mkdir -p uploads logs && \
+RUN mkdir -p uploads uploads/voice logs && \
     chown -R nodejs:nodejs uploads logs && \
     chmod -R 755 uploads logs
 
