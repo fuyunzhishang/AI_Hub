@@ -196,10 +196,56 @@ jobs:
       run: |
         rm -f ai-hub.tar.gz
 
-    # 成功通知
-    - name: Success Notification
-      if: success()
+    # 成功时发送企业微信通知
+    - name: Send WeChat Notification on Success
+      if: ${{ success() }}
+      shell: pwsh
       run: |
-        echo "🎉 Docker 部署成功！"
-        echo "部署时间: $(date)"
-        echo "Git 提交: ${{ github.sha }}"
+        $env:PYTHONIOENCODING = "utf-8"
+        if ($env:RUNNER_OS -eq "Windows") {
+        curl -X POST -H "Content-Type: application/json" `
+                --data '{
+                    "msgtype": "text",
+                    "text": {
+                      "content": "✅ AIMIX_Master【开发分支-Windows】部署成功！执行人：${{ github.actor }}。\n最后提交信息：${{ env.last_commit }}"
+                    }
+                  }' `
+                "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=b0a27176-ca9b-4f08-9991-34f8174edfcb"
+        } else {
+          curl -X POST -H "Content-Type: application/json" `
+                  --data '{
+                      "msgtype": "text",
+                      "text": {
+                        "content": "✅ AIMIX_Master【开发分支-Mac】部署成功！执行人：${{ github.actor }}。\n最后提交信息：${{ env.last_commit }}"
+                      }
+                    }' `
+                  "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=b0a27176-ca9b-4f08-9991-34f8174edfcb"
+        }
+
+    # 失败时发送企业微信通知
+    - name: Send WeChat Notification on Failure
+      if: ${{ failure() }}
+      shell: pwsh
+      run: |
+        $env:PYTHONIOENCODING = "utf-8"
+        if ($env:RUNNER_OS -eq "Windows") {
+            # Windows 平台
+            curl -X POST -H "Content-Type: application/json" `
+                --data '{
+                    "msgtype": "text",
+                    "text": {
+                      "content": "❌ AIMIX_Master【开发分支-Windows】部署失败！请检查日志。\n执行人：fuyunzhishang。\n最后提交信息。"
+                    }
+                  }' `
+                "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=b0a27176-ca9b-4f08-9991-34f8174edfcb"
+        }
+        else {
+            curl -X POST -H "Content-Type: application/json" `
+                --data '{
+                    "msgtype": "text",
+                    "text": {
+                      "content": "❌ AIMIX_Master【开发分支-Mac】部署失败！请检查日志。\n执行人：fuyunzhishang。\n最后提交信息。"
+                    }
+                  }' `
+                "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=b0a27176-ca9b-4f08-9991-34f8174edfcb"
+        }
