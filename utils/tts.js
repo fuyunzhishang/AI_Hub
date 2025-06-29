@@ -3163,7 +3163,7 @@ export const ttsList = [
     googleGenAI: [
       {
         key: 'Zephyr',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Zephyr.wav',
+        example_voice_url: '/voice-samples/google/Zephyr.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Zephyr (Bright)',
@@ -3175,7 +3175,7 @@ export const ttsList = [
       },
       {
         key: 'Puck',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Puck.wav',
+        example_voice_url: '/voice-samples/google/Puck.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Puck (Upbeat)',
@@ -3187,7 +3187,7 @@ export const ttsList = [
       },
       {
         key: 'Charon',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Charon.wav',
+        example_voice_url: '/voice-samples/google/Charon.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Charon (Informative)',
@@ -3199,7 +3199,7 @@ export const ttsList = [
       },
       {
         key: 'Kore',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Kore.wav',
+        example_voice_url: '/voice-samples/google/Kore.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Kore (Firm)',
@@ -3211,7 +3211,7 @@ export const ttsList = [
       },
       {
         key: 'Fenrir',
-        example_voice_url: 'https://www.gstatic.com/aistudio/voices/samples/Fenrir.wav',
+        example_voice_url: '/voice-samples/google/Fenrir.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Fenrir (Excitable)',
@@ -3223,7 +3223,7 @@ export const ttsList = [
       },
       {
         key: 'Leda',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Leda.wav',
+        example_voice_url: '/voice-samples/google/Leda.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Leda (Youthful)',
@@ -3235,7 +3235,7 @@ export const ttsList = [
       },
       {
         key: 'Orus',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Orus.wav',
+        example_voice_url: '/voice-samples/google/Orus.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Orus (Firm)',
@@ -3247,7 +3247,7 @@ export const ttsList = [
       },
       {
         key: 'Aoede',
-        example_voice_url: 'https://www.gstatic.com/aistudio/voices/samples/Aoede.wav',
+        example_voice_url: '/voice-samples/google/Aoede.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Aoede (Breezy)',
@@ -3259,7 +3259,7 @@ export const ttsList = [
       },
       {
         key: 'Callirrhoe',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Callirrhoe.wav',
+        example_voice_url: '/voice-samples/google/Callirrhoe.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Callirrhoe (Easy-going)',
@@ -3271,7 +3271,7 @@ export const ttsList = [
       },
       {
         key: 'Autonoe',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Autonoe.wav',
+        example_voice_url: '/voice-samples/google/Autonoe.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Autonoe (Bright)',
@@ -3283,7 +3283,7 @@ export const ttsList = [
       },
       {
         key: 'Enceladus',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Enceladus.wav',
+        example_voice_url: '/voice-samples/google/Enceladus.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Enceladus (Breathy)',
@@ -3295,7 +3295,7 @@ export const ttsList = [
       },
       {
         key: 'Iapetus',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Iapetus.wav',
+        example_voice_url: '/voice-samples/google/Iapetus.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Iapetus (Clear)',
@@ -3307,7 +3307,7 @@ export const ttsList = [
       },
       {
         key: 'Umbriel',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Umbriel.wav',
+        example_voice_url: '/voice-samples/google/Umbriel.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Umbriel (Easy-going)',
@@ -3319,7 +3319,7 @@ export const ttsList = [
       },
       {
         key: 'Algieba',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Algieba.wav',
+        example_voice_url: '/voice-samples/google/Algieba.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Algieba (Smooth)',
@@ -3331,7 +3331,7 @@ export const ttsList = [
       },
       {
         key: 'Despina',
-        example_voice_url: 'https://www.gstatic.com/aistudio/voices/samples/Despina.wav',
+        example_voice_url: '/voice-samples/google/Despina.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Despina (Smooth)',
@@ -3343,7 +3343,7 @@ export const ttsList = [
       },
       {
         key: 'Erinome',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Erinome.wav',
+        example_voice_url: '/voice-samples/google/Erinome.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Erinome (Clear)',
@@ -3355,7 +3355,7 @@ export const ttsList = [
       },
       {
         key: 'Algenib',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Algenib.wav',
+        example_voice_url: '/voice-samples/google/Algenib.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Algenib (Gravelly)',
@@ -3367,7 +3367,7 @@ export const ttsList = [
       },
       {
         key: 'Rasalgethi',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Rasalgethi.wav',
+        example_voice_url: '/voice-samples/google/Rasalgethi.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Rasalgethi (Informative)',
@@ -3379,7 +3379,7 @@ export const ttsList = [
       },
       {
         key: 'Laomedeia',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Laomedeia.wav',
+        example_voice_url: '/voice-samples/google/Laomedeia.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Laomedeia (Upbeat)',
@@ -3391,7 +3391,7 @@ export const ttsList = [
       },
       {
         key: 'Achernar',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Achernar.wav',
+        example_voice_url: '/voice-samples/google/Achernar.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Achernar (Soft)',
@@ -3403,7 +3403,7 @@ export const ttsList = [
       },
       {
         key: 'Alnilam',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Alnilam.wav',
+        example_voice_url: '/voice-samples/google/Alnilam.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Alnilam (Firm)',
@@ -3415,7 +3415,7 @@ export const ttsList = [
       },
       {
         key: 'Schedar',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Schedar.wav',
+        example_voice_url: '/voice-samples/google/Schedar.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Schedar (Even)',
@@ -3427,7 +3427,7 @@ export const ttsList = [
       },
       {
         key: 'Gacrux',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Gacrux.wav',
+        example_voice_url: '/voice-samples/google/Gacrux.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Gacrux (Mature)',
@@ -3439,7 +3439,7 @@ export const ttsList = [
       },
       {
         key: 'Pulcherrima',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Pulcherrima.wav',
+        example_voice_url: '/voice-samples/google/Pulcherrima.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Pulcherrima (Forward)',
@@ -3451,7 +3451,7 @@ export const ttsList = [
       },
       {
         key: 'Achird',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Achird.wav',
+        example_voice_url: '/voice-samples/google/Achird.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Achird (Friendly)',
@@ -3463,7 +3463,7 @@ export const ttsList = [
       },
       {
         key: 'Zubenelgenubi',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Zubenelgenubi.wav',
+        example_voice_url: '/voice-samples/google/Zubenelgenubi.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Zubenelgenubi (Casual)',
@@ -3475,7 +3475,7 @@ export const ttsList = [
       },
       {
         key: 'Vindemiatrix',
-        example_voice_url: 'https://www.gstatic.com/aistudio/voices/samples/Vindemiatrix.wav',
+        example_voice_url: '/voice-samples/google/Vindemiatrix.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Vindemiatrix (Gentle)',
@@ -3487,7 +3487,7 @@ export const ttsList = [
       },
       {
         key: 'Sadachbia',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Sadachbia.wav',
+        example_voice_url: '/voice-samples/google/Sadachbia.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Sadachbia (Lively)',
@@ -3499,7 +3499,7 @@ export const ttsList = [
       },
       {
         key: 'Sadaltager',
-        example_voice_url: 'https://gstatic.com/aistudio/voices/samples/Sadaltager.wav',
+        example_voice_url: '/voice-samples/google/Sadaltager.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Male',
         name: 'Sadaltager (Knowledgeable)',
@@ -3511,7 +3511,7 @@ export const ttsList = [
       },
       {
         key: 'Sulafat',
-        example_voice_url: 'https://www.gstatic.com/aistudio/voices/samples/Sulafat.wav',
+        example_voice_url: '/voice-samples/google/Sulafat.wav',
         icon: 'https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg',
         sex: 'Female',
         name: 'Sulafat (Warm)',
