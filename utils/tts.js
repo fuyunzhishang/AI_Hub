@@ -1,6 +1,6 @@
 export const ttsList = [
   {
-    microSoft: [
+    "microsoft-api": [
       {
         key: 'zh-CN-YunxiNeural',
         example_voice_url:
@@ -178,7 +178,7 @@ export const ttsList = [
         name: 'Steffan',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -190,7 +190,7 @@ export const ttsList = [
         name: 'Roger',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -202,7 +202,7 @@ export const ttsList = [
         name: 'Michelle',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -214,7 +214,7 @@ export const ttsList = [
         name: 'Jenny',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -226,7 +226,7 @@ export const ttsList = [
         name: 'Guy',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -238,7 +238,7 @@ export const ttsList = [
         name: 'Eric',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -250,7 +250,7 @@ export const ttsList = [
         name: 'Christopher',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -262,7 +262,7 @@ export const ttsList = [
         name: 'Aria',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -274,7 +274,7 @@ export const ttsList = [
         name: 'Ana',
         lang: '英语(美国)',
         en_lang: 'English (American)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -286,7 +286,7 @@ export const ttsList = [
         name: 'Luke',
         lang: '英语(南非)',
         en_lang: 'English (South Africa)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -298,7 +298,7 @@ export const ttsList = [
         name: 'Leah',
         lang: '英语(南非)',
         en_lang: 'English (South Africa)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -310,7 +310,7 @@ export const ttsList = [
         name: 'Imani',
         lang: '英语(坦桑尼亚)',
         en_lang: 'English (Tanzania)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -322,7 +322,7 @@ export const ttsList = [
         name: 'Elimu',
         lang: '英语(坦桑尼亚)',
         en_lang: 'English (Tanzania)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -334,7 +334,7 @@ export const ttsList = [
         name: 'Wayne',
         lang: '英语(新加坡)',
         en_lang: 'English (Singapore)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -346,7 +346,7 @@ export const ttsList = [
         name: 'Luna',
         lang: '英语(新加坡)',
         en_lang: 'English (Singapore)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -358,7 +358,7 @@ export const ttsList = [
         name: 'Rosa',
         lang: '英语(菲律宾)',
         en_lang: 'English (Philippines)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -370,7 +370,7 @@ export const ttsList = [
         name: 'James',
         lang: '英语(菲律宾)',
         en_lang: 'English (Philippines)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -382,7 +382,7 @@ export const ttsList = [
         name: 'Molly',
         lang: '英语(新西兰)',
         en_lang: 'English (New Zealand)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -394,7 +394,7 @@ export const ttsList = [
         name: 'Mitchell',
         lang: '英语(新西兰)',
         en_lang: 'English (New Zealand)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -406,7 +406,7 @@ export const ttsList = [
         name: 'Ezinne',
         lang: '英语(尼日利亚)',
         en_lang: 'English (Nigeria)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -418,7 +418,7 @@ export const ttsList = [
         name: 'Abeo',
         lang: '英语(尼日利亚)',
         en_lang: 'English (Nigeria)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -430,7 +430,7 @@ export const ttsList = [
         name: 'Chilemba',
         lang: '英语(肯尼亚)',
         en_lang: 'English (Kenya)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -442,7 +442,7 @@ export const ttsList = [
         name: 'Asilia',
         lang: '英语(肯尼亚)',
         en_lang: 'English (Kenya)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -454,7 +454,7 @@ export const ttsList = [
         name: 'Prabhat',
         lang: '英语(印度)',
         en_lang: 'English (India)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -466,7 +466,7 @@ export const ttsList = [
         name: 'Neerja',
         lang: '英语(印度)',
         en_lang: 'English (India)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -478,7 +478,7 @@ export const ttsList = [
         name: 'Emily',
         lang: '英(爱尔兰)',
         en_lang: 'English (Ireland)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -490,7 +490,7 @@ export const ttsList = [
         name: 'Connor',
         lang: '英语(爱尔兰)',
         en_lang: 'English (Ireland)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -502,7 +502,7 @@ export const ttsList = [
         name: 'Yan',
         lang: '英语(香港特别行政区)',
         en_lang: 'English (Hong Kong Special Administrative Region)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -514,7 +514,7 @@ export const ttsList = [
         name: 'Sam',
         lang: '英语(香港特别行政区)',
         en_lang: 'English (Hong Kong Special Administrative Region)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -526,7 +526,7 @@ export const ttsList = [
         name: 'Thomas',
         lang: '英语(英国)',
         en_lang: 'English (British)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -538,7 +538,7 @@ export const ttsList = [
         name: 'Sonia',
         lang: '英语(英国)',
         en_lang: 'English (British)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -550,7 +550,7 @@ export const ttsList = [
         name: 'Ryan',
         lang: '英语(英国)',
         en_lang: 'English (British)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -562,7 +562,7 @@ export const ttsList = [
         name: 'Maisie',
         lang: '英语(英国)',
         en_lang: 'English (British)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -574,7 +574,7 @@ export const ttsList = [
         name: 'Libby',
         lang: '英语(英国)',
         en_lang: 'English (British)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -586,7 +586,7 @@ export const ttsList = [
         name: 'Liam',
         lang: '英语(加拿大)',
         en_lang: 'English (Canada)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -598,7 +598,7 @@ export const ttsList = [
         name: 'Clara',
         lang: '英语(加拿大)',
         en_lang: 'English (Canada)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -610,7 +610,7 @@ export const ttsList = [
         name: 'William',
         lang: '英语(澳大利亚)',
         en_lang: 'English (Australia)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -622,7 +622,7 @@ export const ttsList = [
         name: '선히',
         lang: '韩语(韩国)',
         en_lang: 'Korean (Korean)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -634,7 +634,7 @@ export const ttsList = [
         name: '인준',
         lang: '韩语(韩国)',
         en_lang: 'Korean (Korean)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -646,7 +646,7 @@ export const ttsList = [
         name: 'Natasha',
         lang: '英语(澳大利亚)',
         en_lang: 'English (Australia)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -658,7 +658,7 @@ export const ttsList = [
         name: 'Nam Minh',
         lang: '越南语(越南)',
         en_lang: 'Vietnamese (Vietnam)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -670,7 +670,7 @@ export const ttsList = [
         name: 'Hoài My',
         lang: '越南语(越南)',
         en_lang: 'Vietnamese (Vietnam)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -681,7 +681,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Sardor',
         lang: '乌兹别克语(乌兹别克斯坦)',
-        en_lang: 'Uzbek language (Uzbekistan)'
+        en_lang: 'Uzbek language (Uzbekistan)',
+        type: 'microsoft-api'
       },
       {
         key: 'uz-UZ-MadinaNeural',
@@ -691,7 +692,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Madina',
         lang: '乌兹别克语(乌兹别克斯坦)',
-        en_lang: 'Uzbek language (Uzbekistan)'
+        en_lang: 'Uzbek language (Uzbekistan)',
+        type: 'microsoft-api'
       },
       {
         key: 'ur-PK-UzmaNeural',
@@ -701,7 +703,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'عظمیٰ',
         lang: '乌尔都语(巴基斯坦)',
-        en_lang: 'Uldu (Pakistan)'
+        en_lang: 'Uldu (Pakistan)',
+        type: 'microsoft-api'
       },
       {
         key: 'ur-PK-AsadNeural',
@@ -711,7 +714,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'اسد',
         lang: '乌尔都语(巴基斯坦)',
-        en_lang: 'Uldu (Pakistan)'
+        en_lang: 'Uldu (Pakistan)',
+        type: 'microsoft-api'
       },
       {
         key: 'ur-IN-SalmanNeural',
@@ -721,7 +725,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'سلمان',
         lang: '乌尔都语(印度)',
-        en_lang: 'Uldu (India)'
+        en_lang: 'Uldu (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'ur-IN-GulNeural',
@@ -731,7 +736,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'گل',
         lang: '乌尔都语(印度)',
-        en_lang: 'Uldu (India)'
+        en_lang: 'Uldu (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'uk-UA-PolinaNeural',
@@ -741,7 +747,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Поліна',
         lang: '乌克兰语(乌克兰)',
-        en_lang: 'Ukraine (Ukraine)'
+        en_lang: 'Ukraine (Ukraine)',
+        type: 'microsoft-api'
       },
       {
         key: 'uk-UA-OstapNeural',
@@ -751,7 +758,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Остап',
         lang: '乌克兰语(乌克兰)',
-        en_lang: 'Ukraine (Ukraine)'
+        en_lang: 'Ukraine (Ukraine)',
+        type: 'microsoft-api'
       },
       {
         key: 'tr-TR-EmelNeural',
@@ -762,7 +770,7 @@ export const ttsList = [
         name: 'Emel',
         lang: '土耳其语(Türkiye)',
         en_lang: 'Turkish (Turkey)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -774,7 +782,7 @@ export const ttsList = [
         name: 'Ahmet',
         lang: '土耳其语(Türkiye)',
         en_lang: 'Turkish (Turkey)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -786,7 +794,7 @@ export const ttsList = [
         name: 'เปรมวดี',
         lang: '泰语(泰国)',
         en_lang: 'Thai (Thailand)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -798,7 +806,7 @@ export const ttsList = [
         name: 'นิวัฒน์',
         lang: '泰语(泰国)',
         en_lang: 'Thai (Thailand)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -809,7 +817,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'శ్రుతి',
         lang: '泰卢固语(印度)',
-        en_lang: 'Tayu Guli (India)'
+        en_lang: 'Tayu Guli (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'te-IN-MohanNeural',
@@ -819,7 +828,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'మోహన్',
         lang: '泰卢固语(印度)',
-        en_lang: 'Tayu Guli (India)'
+        en_lang: 'Tayu Guli (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-SG-VenbaNeural',
@@ -829,7 +839,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'வெண்பா',
         lang: '泰米尔语(新加坡)',
-        en_lang: 'Tamir (Singapore)'
+        en_lang: 'Tamir (Singapore)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-SG-AnbuNeural',
@@ -839,7 +850,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'அன்பு',
         lang: '泰米尔语(新坡)',
-        en_lang: 'Tamir (Singapore)'
+        en_lang: 'Tamir (Singapore)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-MY-SuryaNeural',
@@ -849,7 +861,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'சூர்யா',
         lang: '泰米尔语(马来西亚)',
-        en_lang: 'Tamilian (Malaysia)'
+        en_lang: 'Tamilian (Malaysia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-MY-KaniNeural',
@@ -859,7 +872,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'கனி',
         lang: '泰米尔语(马来西亚)',
-        en_lang: 'Tamilian (Malaysia)'
+        en_lang: 'Tamilian (Malaysia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-LK-SaranyaNeural',
@@ -869,7 +883,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'சரண்யா',
         lang: '泰米尔语(斯里兰卡)',
-        en_lang: 'Tamilian (Sri Lanka)'
+        en_lang: 'Tamilian (Sri Lanka)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-LK-KumarNeural',
@@ -879,7 +894,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'குமார்',
         lang: '泰米尔语(斯里兰卡)',
-        en_lang: 'Tamilian (Sri Lanka)'
+        en_lang: 'Tamilian (Sri Lanka)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-IN-ValluvarNeural',
@@ -889,7 +905,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'வள்ளுவர்',
         lang: '泰米尔语(印度)',
-        en_lang: 'Tamir (India)'
+        en_lang: 'Tamir (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'ta-IN-PallaviNeural',
@@ -899,7 +916,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'பல்லவி',
         lang: '泰米尔语(印度)',
-        en_lang: 'Tamir (India)'
+        en_lang: 'Tamir (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'sw-TZ-RehemaNeural',
@@ -909,7 +927,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Rehema',
         lang: '斯瓦希里语(坦桑尼亚)',
-        en_lang: 'Swahili (Tanzania)'
+        en_lang: 'Swahili (Tanzania)',
+        type: 'microsoft-api'
       },
       {
         key: 'sw-TZ-DaudiNeural',
@@ -919,7 +938,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Daudi',
         lang: '斯瓦希里语(坦桑尼亚)',
-        en_lang: 'Swahili (Tanzania)'
+        en_lang: 'Swahili (Tanzania)',
+        type: 'microsoft-api'
       },
       {
         key: 'sw-KE-ZuriNeural',
@@ -929,7 +949,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Zuri',
         lang: '斯瓦希里语(肯尼亚)',
-        en_lang: 'Swahili (Kenya)'
+        en_lang: 'Swahili (Kenya)',
+        type: 'microsoft-api'
       },
       {
         key: 'sw-KE-RafikiNeural',
@@ -939,7 +960,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Rafiki',
         lang: '斯瓦希里语(肯尼亚)',
-        en_lang: 'Swahili (Kenya)'
+        en_lang: 'Swahili (Kenya)',
+        type: 'microsoft-api'
       },
       {
         key: 'sv-SE-SofieNeural',
@@ -949,7 +971,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Sofie',
         lang: '瑞典语(瑞典)',
-        en_lang: 'Swedish (Sweden)'
+        en_lang: 'Swedish (Sweden)',
+        type: 'microsoft-api'
       },
       {
         key: 'sv-SE-MattiasNeural',
@@ -959,7 +982,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Mattias',
         lang: '瑞典语(瑞典)',
-        en_lang: 'Swedish (Sweden)'
+        en_lang: 'Swedish (Sweden)',
+        type: 'microsoft-api'
       },
       {
         key: 'su-ID-TutiNeural',
@@ -969,7 +993,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Tuti',
         lang: '巽他语(印度尼西亚)',
-        en_lang: 'Sunda (Indonesia)'
+        en_lang: 'Sunda (Indonesia)',
+        type: 'microsoft-api'
       },
       {
         key: 'su-ID-JajangNeural',
@@ -979,7 +1004,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Jajang',
         lang: '巽他语(印度尼西亚)',
-        en_lang: 'Sunda (Indonesia)'
+        en_lang: 'Sunda (Indonesia)',
+        type: 'microsoft-api'
       },
       {
         key: 'sr-RS-SophieNeural',
@@ -989,7 +1015,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Софија',
         lang: '塞尔维亚语(塞尔维亚)',
-        en_lang: 'Serbian (Serbia)'
+        en_lang: 'Serbian (Serbia)',
+        type: 'microsoft-api'
       },
       {
         key: 'sr-RS-NicholasNeural',
@@ -999,7 +1026,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Никола',
         lang: '塞尔维亚语(塞尔维亚)',
-        en_lang: 'Serbian (Serbia)'
+        en_lang: 'Serbian (Serbia)',
+        type: 'microsoft-api'
       },
       {
         key: 'sq-AL-IlirNeural',
@@ -1009,7 +1037,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Ilir',
         lang: '阿尔巴尼亚语(阿尔巴尼亚)',
-        en_lang: 'Albania (Albania)'
+        en_lang: 'Albania (Albania)',
+        type: 'microsoft-api'
       },
       {
         key: 'sq-AL-AnilaNeural',
@@ -1019,7 +1048,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Anila',
         lang: '阿尔巴尼亚语(阿尔巴尼亚)',
-        en_lang: 'Albania (Albania)'
+        en_lang: 'Albania (Albania)',
+        type: 'microsoft-api'
       },
       {
         key: 'so-SO-UbaxNeural',
@@ -1029,7 +1059,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Ubax',
         lang: '索马里语(索马里)',
-        en_lang: 'Somali (Somalia)'
+        en_lang: 'Somali (Somalia)',
+        type: 'microsoft-api'
       },
       {
         key: 'so-SO-MuuseNeural',
@@ -1039,7 +1070,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Muuse',
         lang: '索马里语(索马里)',
-        en_lang: 'Somali (Somalia)'
+        en_lang: 'Somali (Somalia)',
+        type: 'microsoft-api'
       },
       {
         key: 'sl-SI-RokNeural',
@@ -1049,7 +1081,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Rok',
         lang: '斯洛文尼亚语(斯洛文尼亚)',
-        en_lang: 'Slovenia (Slovenia)'
+        en_lang: 'Slovenia (Slovenia)',
+        type: 'microsoft-api'
       },
       {
         key: 'sl-SI-PetraNeural',
@@ -1059,7 +1092,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Petra',
         lang: '斯洛文尼亚语(斯洛文尼亚)',
-        en_lang: 'Slovenia (Slovenia)'
+        en_lang: 'Slovenia (Slovenia)',
+        type: 'microsoft-api'
       },
       {
         key: 'sk-SK-ViktoriaNeural',
@@ -1069,7 +1103,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Viktória',
         lang: '斯洛伐克语(斯洛伐克)',
-        en_lang: 'Slovakian (Slovakia)'
+        en_lang: 'Slovakian (Slovakia)',
+        type: 'microsoft-api'
       },
       {
         key: 'sk-SK-LukasNeural',
@@ -1079,7 +1114,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Lukáš',
         lang: '斯洛伐克语(斯洛伐克)',
-        en_lang: 'Slovakian (Slovakia)'
+        en_lang: 'Slovakian (Slovakia)',
+        type: 'microsoft-api'
       },
       {
         key: 'si-LK-ThiliniNeural',
@@ -1089,7 +1125,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'තිළිණි',
         lang: '僧伽罗语(斯里兰卡)',
-        en_lang: 'Sangha Luo (Sri Lanka)'
+        en_lang: 'Sangha Luo (Sri Lanka)',
+        type: 'microsoft-api'
       },
       {
         key: 'si-LK-SameeraNeural',
@@ -1099,7 +1136,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'සමීර',
         lang: '僧伽罗语(斯里兰卡)',
-        en_lang: 'Sangha Luo (Sri Lanka)'
+        en_lang: 'Sangha Luo (Sri Lanka)',
+        type: 'microsoft-api'
       },
       {
         key: 'ru-RU-SvetlanaNeural',
@@ -1109,7 +1147,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Светлана',
         lang: '俄语(俄罗斯)',
-        en_lang: 'Russian (Russia)'
+        en_lang: 'Russian (Russia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ru-RU-DmitryNeural',
@@ -1119,7 +1158,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Дмитрий',
         lang: '俄语(俄罗斯)',
-        en_lang: 'Russian (Russia)'
+        en_lang: 'Russian (Russia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ro-RO-EmilNeural',
@@ -1129,7 +1169,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Emil',
         lang: '罗马尼亚语(罗马尼亚)',
-        en_lang: 'Romania (Romania)'
+        en_lang: 'Romania (Romania)',
+        type: 'microsoft-api'
       },
       {
         key: 'ro-RO-AlinaNeural',
@@ -1139,7 +1180,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Alina',
         lang: '罗马尼亚语(罗马尼亚)',
-        en_lang: 'Romania (Romania)'
+        en_lang: 'Romania (Romania)',
+        type: 'microsoft-api'
       },
       {
         key: 'pt-PT-RaquelNeural',
@@ -1150,7 +1192,7 @@ export const ttsList = [
         name: 'Raquel',
         lang: '葡萄牙语(葡萄牙)',
         en_lang: 'Portuguese (Portugal)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1162,7 +1204,7 @@ export const ttsList = [
         name: 'Duarte',
         lang: '葡萄牙语(葡萄牙)',
         en_lang: 'Portuguese (Portugal)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1173,7 +1215,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Francisca',
         lang: '葡萄牙语(巴西)',
-        en_lang: 'Portuguese (Brazil)'
+        en_lang: 'Portuguese (Brazil)',
+        type: 'microsoft-api'
       },
       {
         key: 'pt-BR-AntonioNeural',
@@ -1183,7 +1226,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Antônio',
         lang: '葡萄牙语(巴西)',
-        en_lang: 'Portuguese (Brazil)'
+        en_lang: 'Portuguese (Brazil)',
+        type: 'microsoft-api'
       },
       {
         key: 'ps-AF-LatifaNeural',
@@ -1193,7 +1237,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'لطيفه',
         lang: '普什图语(阿富汗)',
-        en_lang: 'Push Tu (Afghanistan)'
+        en_lang: 'Push Tu (Afghanistan)',
+        type: 'microsoft-api'
       },
       {
         key: 'ps-AF-GulNawazNeural',
@@ -1203,7 +1248,8 @@ export const ttsList = [
         sex: 'Male',
         name: ' ګل نواز',
         lang: '普什图语(阿富汗)',
-        en_lang: 'Push Tu (Afghanistan)'
+        en_lang: 'Push Tu (Afghanistan)',
+        type: 'microsoft-api'
       },
       {
         key: 'pl-PL-ZofiaNeural',
@@ -1213,7 +1259,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Zofia',
         lang: '波兰语(波兰)',
-        en_lang: 'Polish (Poland)'
+        en_lang: 'Polish (Poland)',
+        type: 'microsoft-api'
       },
       {
         key: 'pl-PL-MarekNeural',
@@ -1223,7 +1270,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Marek',
         lang: '波兰语(波兰)',
-        en_lang: 'Polish (Poland)'
+        en_lang: 'Polish (Poland)',
+        type: 'microsoft-api'
       },
       {
         key: 'nl-NL-MaartenNeural',
@@ -1233,7 +1281,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Maarten',
         lang: '荷兰语(荷兰)',
-        en_lang: 'Dutch (Netherlands)'
+        en_lang: 'Dutch (Netherlands)',
+        type: 'microsoft-api'
       },
       {
         key: 'nl-NL-FennaNeural',
@@ -1243,7 +1292,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Fenna',
         lang: '荷兰语(荷兰)',
-        en_lang: 'Dutch (Netherlands)'
+        en_lang: 'Dutch (Netherlands)',
+        type: 'microsoft-api'
       },
       {
         key: 'nl-NL-ColetteNeural',
@@ -1263,7 +1313,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Dena',
         lang: '荷兰语(比利时)',
-        en_lang: 'Dutch (Belgium)'
+        en_lang: 'Dutch (Belgium)',
+        type: 'microsoft-api'
       },
       {
         key: 'nl-BE-ArnaudNeural',
@@ -1273,7 +1324,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Arnaud',
         lang: '荷兰语(比利时)',
-        en_lang: 'Dutch (Belgium)'
+        en_lang: 'Dutch (Belgium)',
+        type: 'microsoft-api'
       },
       {
         key: 'ne-NP-SagarNeural',
@@ -1283,7 +1335,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'सागर',
         lang: '尼泊尔语(尼泊尔)',
-        en_lang: 'Nepal (Nepal)'
+        en_lang: 'Nepal (Nepal)',
+        type: 'microsoft-api'
       },
       {
         key: 'ne-NP-HemkalaNeural',
@@ -1293,7 +1346,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'हेमकला',
         lang: '尼泊尔语(尼泊尔)',
-        en_lang: 'Nepal (Nepal)'
+        en_lang: 'Nepal (Nepal)',
+        type: 'microsoft-api'
       },
       {
         key: 'nb-NO-PernilleNeural',
@@ -1303,7 +1357,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Pernille',
         lang: '书面挪威语(挪威)',
-        en_lang: 'Written Norwegian (Norway)'
+        en_lang: 'Written Norwegian (Norway)',
+        type: 'microsoft-api'
       },
       {
         key: 'nb-NO-FinnNeural',
@@ -1313,7 +1368,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Finn',
         lang: '书面挪威语(挪威)',
-        en_lang: 'Written Norwegian (Norway)'
+        en_lang: 'Written Norwegian (Norway)',
+        type: 'microsoft-api'
       },
       {
         key: 'my-MM-ThihaNeural',
@@ -1323,7 +1379,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'သီဟ',
         lang: '缅甸语(缅甸)',
-        en_lang: 'Myanmar (Myanmar)'
+        en_lang: 'Myanmar (Myanmar)',
+        type: 'microsoft-api'
       },
       {
         key: 'my-MM-NilarNeural',
@@ -1333,7 +1390,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'နီလာ',
         lang: '缅甸语(缅甸)',
-        en_lang: 'Myanmar (Myanmar)'
+        en_lang: 'Myanmar (Myanmar)',
+        type: 'microsoft-api'
       },
       {
         key: 'mt-MT-JosephNeural',
@@ -1343,7 +1401,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Joseph',
         lang: '马耳他语(马耳他)',
-        en_lang: 'Malta (Malta)'
+        en_lang: 'Malta (Malta)',
+        type: 'microsoft-api'
       },
       {
         key: 'mt-MT-GraceNeural',
@@ -1353,7 +1412,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Grace',
         lang: '马耳他语(马耳他)',
-        en_lang: 'Malta (Malta)'
+        en_lang: 'Malta (Malta)',
+        type: 'microsoft-api'
       },
       {
         key: 'ms-MY-YasminNeural',
@@ -1364,7 +1424,7 @@ export const ttsList = [
         name: 'Yasmin',
         lang: '马来语(马来西亚)',
         en_lang: 'Malay (Malaysia)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1376,7 +1436,7 @@ export const ttsList = [
         name: 'Osman',
         lang: '马来语(马来西亚)',
         en_lang: 'Malay (Malaysia)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1387,7 +1447,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'मनोहर',
         lang: '马拉地语(印度)',
-        en_lang: 'Maladian (India)'
+        en_lang: 'Maladian (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'mr-IN-AarohiNeural',
@@ -1397,7 +1458,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'आरोही',
         lang: '马拉地语(印度)',
-        en_lang: 'Maladian (India)'
+        en_lang: 'Maladian (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'mn-MN-YesuiNeural',
@@ -1407,7 +1469,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Есүй',
         lang: '蒙古语(蒙古)',
-        en_lang: 'Mongolian (Mongolia)'
+        en_lang: 'Mongolian (Mongolia)',
+        type: 'microsoft-api'
       },
       {
         key: 'mn-MN-BataaNeural',
@@ -1417,7 +1480,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Батаа',
         lang: '蒙古语(蒙古)',
-        en_lang: 'Mongolian (Mongolia)'
+        en_lang: 'Mongolian (Mongolia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ml-IN-SobhanaNeural',
@@ -1427,7 +1491,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'ശോഭന',
         lang: '马拉雅拉姆语(印度)',
-        en_lang: 'Mara Bam (India)'
+        en_lang: 'Mara Bam (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'ml-IN-MidhunNeural',
@@ -1437,7 +1502,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'മിഥുൻ',
         lang: '马拉雅拉姆语(印度)',
-        en_lang: 'Mara Bam (India)'
+        en_lang: 'Mara Bam (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'mk-MK-MarijaNeural',
@@ -1447,7 +1513,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Марија',
         lang: '马其顿语(北马其顿)',
-        en_lang: 'Macedonian (North Macedon)'
+        en_lang: 'Macedonian (North Macedon)',
+        type: 'microsoft-api'
       },
       {
         key: 'mk-MK-AleksandarNeural',
@@ -1457,7 +1524,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Александар',
         lang: '马其顿语(北马其顿)',
-        en_lang: 'Macedonian (North Macedon)'
+        en_lang: 'Macedonian (North Macedon)',
+        type: 'microsoft-api'
       },
       {
         key: 'lv-LV-NilsNeural',
@@ -1467,7 +1535,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Nils',
         lang: '拉脱维亚语(拉脱维亚)',
-        en_lang: 'Latvian (Latvia)'
+        en_lang: 'Latvian (Latvia)',
+        type: 'microsoft-api'
       },
       {
         key: 'lv-LV-EveritaNeural',
@@ -1477,7 +1546,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Everita',
         lang: '拉脱维亚语(拉脱维亚)',
-        en_lang: 'Latvian (Latvia)'
+        en_lang: 'Latvian (Latvia)',
+        type: 'microsoft-api'
       },
       {
         key: 'lt-LT-OnaNeural',
@@ -1487,7 +1557,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Ona',
         lang: '立陶宛语(立陶宛)',
-        en_lang: 'Lithuania (Lithuania)'
+        en_lang: 'Lithuania (Lithuania)',
+        type: 'microsoft-api'
       },
       {
         key: 'lt-LT-LeonasNeural',
@@ -1497,7 +1568,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Leonas',
         lang: '立陶宛语(立陶宛)',
-        en_lang: 'Lithuania (Lithuania)'
+        en_lang: 'Lithuania (Lithuania)',
+        type: 'microsoft-api'
       },
       {
         key: 'lo-LA-KeomanyNeural',
@@ -1507,7 +1579,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'ແກ້ວມະນີ',
         lang: '老挝语(老挝) ',
-        en_lang: 'Laos (Laos)'
+        en_lang: 'Laos (Laos)',
+        type: 'microsoft-api'
       },
       {
         key: 'lo-LA-ChanthavongNeural',
@@ -1517,7 +1590,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'ຈັນທະວົງ',
         lang: '老挝语(老挝) ',
-        en_lang: 'Laos (Laos)'
+        en_lang: 'Laos (Laos)',
+        type: 'microsoft-api'
       },
       {
         key: 'kn-IN-SapnaNeural',
@@ -1527,7 +1601,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'ಸಪ್ನಾ',
         lang: '埃纳德语(印度)',
-        en_lang: 'Enad (India)'
+        en_lang: 'Enad (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'kn-IN-GaganNeural',
@@ -1537,7 +1612,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'ಗಗನ್',
         lang: '埃纳德语(印度)',
-        en_lang: 'Enad (India)'
+        en_lang: 'Enad (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'km-KH-SreymomNeural',
@@ -1547,7 +1623,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'ស្រីមុំ',
         lang: '高棉语(柬埔寨)',
-        en_lang: 'Khmer (Cambodia)'
+        en_lang: 'Khmer (Cambodia)',
+        type: 'microsoft-api'
       },
       {
         key: 'km-KH-PisethNeural',
@@ -1557,7 +1634,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'ពិសិដ្ឋ',
         lang: '高棉语(柬埔寨)',
-        en_lang: 'Khmer (Cambodia)'
+        en_lang: 'Khmer (Cambodia)',
+        type: 'microsoft-api'
       },
       {
         key: 'kk-KZ-DauletNeural',
@@ -1567,7 +1645,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Дәулет',
         lang: '哈萨克语(哈萨克斯坦)',
-        en_lang: 'Kazakh (Kazakhstan)'
+        en_lang: 'Kazakh (Kazakhstan)',
+        type: 'microsoft-api'
       },
       {
         key: 'kk-KZ-AigulNeural',
@@ -1577,7 +1656,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Айгүл',
         lang: '哈萨克语(哈萨克斯坦)',
-        en_lang: 'Kazakh (Kazakhstan)'
+        en_lang: 'Kazakh (Kazakhstan)',
+        type: 'microsoft-api'
       },
       {
         key: 'ka-GE-GiorgiNeural',
@@ -1587,7 +1667,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'გიორგი',
         lang: '格鲁吉亚语(格鲁吉亚)',
-        en_lang: 'Georgian (Georgia)'
+        en_lang: 'Georgian (Georgia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ka-GE-EkaNeural',
@@ -1597,7 +1678,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'ეკა',
         lang: '格鲁吉亚语(格鲁吉亚)',
-        en_lang: 'Georgian (Georgia)'
+        en_lang: 'Georgian (Georgia)',
+        type: 'microsoft-api'
       },
       {
         key: 'jv-ID-SitiNeural',
@@ -1607,7 +1689,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Siti',
         lang: '爪哇语(印度尼西亚)',
-        en_lang: 'Java (Indonesia)'
+        en_lang: 'Java (Indonesia)',
+        type: 'microsoft-api'
       },
       {
         key: 'jv-ID-DimasNeural',
@@ -1617,7 +1700,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Dimas',
         lang: '爪哇语(印度尼西亚)',
-        en_lang: 'Java (Indonesia)'
+        en_lang: 'Java (Indonesia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ja-JP-NanamiNeural',
@@ -1628,7 +1712,7 @@ export const ttsList = [
         name: '七海',
         lang: '日语(日本)',
         en_lang: 'Japanese (Japanese)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1640,7 +1724,7 @@ export const ttsList = [
         name: '圭太',
         lang: '日语(日本)',
         en_lang: 'Japanese (Japanese)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1701,7 +1785,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Gadis',
         lang: '印度尼西亚语(印度尼西亚)',
-        en_lang: 'Indonesian (Indonesia) (Indonesia)'
+        en_lang: 'Indonesian (Indonesia) (Indonesia)',
+        type: 'microsoft-api'
       },
       {
         key: 'id-ID-ArdiNeural',
@@ -1711,7 +1796,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Ardi',
         lang: '印度尼西亚语(印度尼西亚)',
-        en_lang: 'Indonesian (Indonesia) (Indonesia)'
+        en_lang: 'Indonesian (Indonesia) (Indonesia)',
+        type: 'microsoft-api'
       },
       {
         key: 'hu-HU-TamasNeural',
@@ -1721,7 +1807,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Tamás',
         lang: '匈牙利语(匈牙利)',
-        en_lang: 'Hungarian (Hungarian)'
+        en_lang: 'Hungarian (Hungarian)',
+        type: 'microsoft-api'
       },
       {
         key: 'hu-HU-NoemiNeural',
@@ -1731,7 +1818,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Noémi',
         lang: '匈牙利语(匈牙利)',
-        en_lang: 'Hungarian (Hungarian)'
+        en_lang: 'Hungarian (Hungarian)',
+        type: 'microsoft-api'
       },
       {
         key: 'hr-HR-SreckoNeural',
@@ -1741,7 +1829,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Srećko',
         lang: '克罗地亚语(克罗地亚)',
-        en_lang: 'Croatian (Croatia)'
+        en_lang: 'Croatian (Croatia)',
+        type: 'microsoft-api'
       },
       {
         key: 'hr-HR-GabrijelaNeural',
@@ -1751,7 +1840,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Gabrijela',
         lang: '克罗地亚语(克罗地亚)',
-        en_lang: 'Croatian (Croatia)'
+        en_lang: 'Croatian (Croatia)',
+        type: 'microsoft-api'
       },
       {
         key: 'hi-IN-SwaraNeural',
@@ -1762,7 +1852,7 @@ export const ttsList = [
         name: 'स्वरा',
         lang: '印地语(印度)',
         en_lang: 'Indian (India)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1774,7 +1864,7 @@ export const ttsList = [
         name: 'मधुर',
         lang: '印地语(印度)',
         en_lang: 'Indian (India)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1785,7 +1875,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'הילה',
         lang: '希伯来语(以色列)',
-        en_lang: 'Hebrew (Israel)'
+        en_lang: 'Hebrew (Israel)',
+        type: 'microsoft-api'
       },
       {
         key: 'he-IL-AvriNeural',
@@ -1795,7 +1886,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'אברי',
         lang: '希伯来语(以色列)',
-        en_lang: 'Hebrew (Israel)'
+        en_lang: 'Hebrew (Israel)',
+        type: 'microsoft-api'
       },
       {
         key: 'gu-IN-NiranjanNeural',
@@ -1805,7 +1897,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'નિરંજન',
         lang: '古吉拉特语(印度)',
-        en_lang: 'Gujerate (India)'
+        en_lang: 'Gujerate (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'gu-IN-DhwaniNeural',
@@ -1815,7 +1908,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'ધ્વની',
         lang: '古吉拉特语(印度)',
-        en_lang: 'Gujerate (India)'
+        en_lang: 'Gujerate (India)',
+        type: 'microsoft-api'
       },
       {
         key: 'gl-ES-SabelaNeural',
@@ -1825,7 +1919,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Sabela',
         lang: '加利西亚语(加利西亚语)',
-        en_lang: 'Galicia (Galicia)'
+        en_lang: 'Galicia (Galicia)',
+        type: 'microsoft-api'
       },
       {
         key: 'gl-ES-RoiNeural',
@@ -1835,7 +1930,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Roi',
         lang: '加利西亚语(加利西亚语)',
-        en_lang: 'Galicia (Galicia)'
+        en_lang: 'Galicia (Galicia)',
+        type: 'microsoft-api'
       },
       {
         key: 'ga-IE-OrlaNeural',
@@ -1845,7 +1941,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Orla',
         lang: '爱尔兰语(爱尔兰)',
-        en_lang: 'Irish (Irish)'
+        en_lang: 'Irish (Irish)',
+        type: 'microsoft-api'
       },
       {
         key: 'ga-IE-ColmNeural',
@@ -1855,7 +1952,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Colm',
         lang: '爱尔兰语(爱尔兰)',
-        en_lang: 'Irish (Irish)'
+        en_lang: 'Irish (Irish)',
+        type: 'microsoft-api'
       },
       {
         key: 'fr-FR-HenriNeural',
@@ -1866,7 +1964,7 @@ export const ttsList = [
         name: 'Henri',
         lang: '法语(法国)',
         en_lang: 'French (France)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1878,7 +1976,7 @@ export const ttsList = [
         name: 'Eloise',
         lang: '法语(法国)',
         en_lang: 'French (France)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -1890,7 +1988,7 @@ export const ttsList = [
         name: 'Denise',
         lang: '法语(法国)',
         en_lang: 'French (France)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2312,7 +2410,7 @@ export const ttsList = [
         name: 'Elvira',
         lang: '西班牙语(西班牙)',
         en_lang: 'Spanish (Spain)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2324,7 +2422,7 @@ export const ttsList = [
         name: 'Álvaro',
         lang: '西班牙语(西班牙)',
         en_lang: 'Spanish (Spain)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2516,7 +2614,7 @@ export const ttsList = [
         name: 'Killian',
         lang: '德语(德国)',
         en_lang: 'German (Germany)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2528,7 +2626,7 @@ export const ttsList = [
         name: 'Katja',
         lang: '德语(德国)',
         en_lang: 'German (Germany)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2540,7 +2638,7 @@ export const ttsList = [
         name: 'Conrad',
         lang: '德语(德国)',
         en_lang: 'German (Germany)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2552,7 +2650,7 @@ export const ttsList = [
         name: 'Amala',
         lang: '德语(德国)',
         en_lang: 'German (Germany)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2844,7 +2942,7 @@ export const ttsList = [
         name: 'زارية',
         lang: '阿拉伯语(沙特阿拉伯)',
         en_lang: 'Arabic (Saudi Arabia)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -2856,7 +2954,7 @@ export const ttsList = [
         name: 'حامد',
         lang: '阿拉伯语(沙特阿拉伯)',
         en_lang: 'Arabic (Saudi Arabia)',
-        type: 'other-lang',
+        type: 'microsoft-api',
         level: 3
       },
       {
@@ -3147,7 +3245,8 @@ export const ttsList = [
         sex: 'Male',
         name: 'Willem',
         lang: '南非荷兰语(南非)',
-        en_lang: 'South African Dutch (South Africa)'
+        en_lang: 'South African Dutch (South Africa)',
+        type: 'microsoft-api'
       },
       {
         key: 'af-ZA-AdriNeural',
@@ -3157,7 +3256,8 @@ export const ttsList = [
         sex: 'Female',
         name: 'Adri',
         lang: '南非荷兰语(南非)',
-        en_lang: 'South African Dutch (South Africa)'
+        en_lang: 'South African Dutch (South Africa)',
+        type: 'microsoft-api'
       }
     ],
     googleGenAI: [

@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Get voices from utils/tts.js
-const MICROSOFT_VOICES_RAW = ttsList[0].microSoft || []
+const MICROSOFT_VOICES_RAW = ttsList[0]["microsoft-api"] || []
 const GOOGLE_VOICES_RAW = ttsList[0].googleGenAI || []
 
 // Transform the Microsoft voice data to group by language
@@ -74,17 +74,16 @@ class TTSService {
   async getVoiceList(provider = 'all', language = 'all') {
     const voices = {}
 
-    if (provider === 'all' || provider === 'microsoft' || provider === 'microsoft-api') {
-      const key = provider === 'microsoft-api' ? 'microsoft-api' : 'microsoft'
+    if (provider === 'all' || provider === 'microsoft-api') {
       if (language === 'all') {
         // 返回所有语言的语音，同时提供原始列表用于展示
-        voices[key] = {
+        voices['microsoft-api'] = {
           grouped: MICROSOFT_VOICES,
           list: MICROSOFT_VOICES_RAW
         }
       } else {
         // 返回特定语言的语音
-        voices[key] = {
+        voices['microsoft-api'] = {
           grouped: { [language]: MICROSOFT_VOICES[language] || [] },
           list: MICROSOFT_VOICES_RAW.filter(voice => voice.key.startsWith(language))
         }
@@ -329,7 +328,7 @@ class TTSService {
         model: "gemini-2.5-flash-preview-tts",
         contents: [{
           parts: [{
-            text: `Say in ${voiceId} voice: ${text}`
+            text: `正常语速和音量,清晰,Say in ${voiceId} voice: ${text}`
           }]
         }],
         config: {
