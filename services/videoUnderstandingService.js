@@ -66,8 +66,8 @@ class VideoUnderstandingService {
           parts: contents
         }],
         generationConfig: {
-          temperature: 0.4,
-          maxOutputTokens: 8192,
+          temperature: 0.7,
+          maxOutputTokens: 65536,
         },
       });
 

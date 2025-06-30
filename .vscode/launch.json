@@ -1,0 +1,116 @@
+{
+    // VS Code 调试配置文件
+    // 针对 AI_Hub Node.js Express 项目优化
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "🚀 启动调试服务器",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/index.js",
+            "env": {
+                "NODE_ENV": "development",
+                "PORT": "3099"
+            },
+            "envFile": "${workspaceFolder}/.env",
+            "console": "integratedTerminal",
+            "restart": true,
+            "runtimeArgs": [
+                "--experimental-modules"
+            ],
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
+            "outputCapture": "std",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "🔄 启动开发模式 (--watch)",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/index.js",
+            "env": {
+                "NODE_ENV": "development",
+                "PORT": "3099"
+            },
+            "envFile": "${workspaceFolder}/.env",
+            "console": "integratedTerminal",
+            "restart": true,
+            "runtimeArgs": [
+                "--watch",
+                "--experimental-modules"
+            ],
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
+            "outputCapture": "std",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "🔗 附加到运行中的进程",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": null,
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
+            "restart": true
+        },
+        {
+            "name": "🧪 测试模式调试",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/index.js",
+            "env": {
+                "NODE_ENV": "test",
+                "PORT": "3100"
+            },
+            "envFile": "${workspaceFolder}/.env",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
+            "outputCapture": "std"
+        },
+        {
+            "name": "📦 生产模式调试",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/index.js",
+            "env": {
+                "NODE_ENV": "production",
+                "PORT": "3099"
+            },
+            "envFile": "${workspaceFolder}/.env",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
+            "outputCapture": "std"
+        },
+        {
+            "name": "🛠️ 运行 npm dev 脚本",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "🔧 完整开发环境",
+            "configurations": [
+                "🔄 启动开发模式 (--watch)"
+            ],
+            "stopAll": true
+        }
+    ]
+}
