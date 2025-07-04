@@ -33,6 +33,10 @@ const options = {
     },
     tags: [
       {
+        name: 'BizAPI',
+        description: '业务接口'
+      },
+      {
         name: '音频处理',
         description: '音频转码、数据提取等功能'
       },
