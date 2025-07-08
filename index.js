@@ -77,10 +77,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-// 添加请求日志中间件
-app.use(requestLogger)
-app.use(responseLogger)
-
 // 中间件设置
 // 注意：对于文件上传路由，不要预先解析请求体，让 multer 处理
 app.use(express.static(path.join(__dirname, 'public')))
@@ -103,6 +99,10 @@ app.use((req, res, next) => {
 
 // 设置上传文件的目录为静态资源
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+// 添加请求日志中间件（在body解析之后）
+app.use(requestLogger)
+app.use(responseLogger)
 
 // Swagger API 文档
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
