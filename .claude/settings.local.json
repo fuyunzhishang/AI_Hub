@@ -20,7 +20,9 @@
       "Bash(rg:*)",
       "Bash(pkill:*)",
       "Bash(true)",
-      "WebFetch(domain:node.cool-admin.com)"
+      "WebFetch(domain:node.cool-admin.com)",
+      "Bash(awk:*)",
+      "Bash(docker exec:*)"
     ],
     "deny": []
   }

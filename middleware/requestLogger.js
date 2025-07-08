@@ -1,8 +1,67 @@
 import morgan from 'morgan';
 import logger from '../utils/logger.js';
+import onFinished from 'on-finished';
 
-// 创建 Morgan 中间件
-const requestLogger = morgan(
+// 创建自定义请求日志中间件
+const requestLogger = (req, res, next) => {
+  // 记录请求开始时间
+  req._startTime = Date.now();
+  
+  // 在响应结束时记录日志
+  onFinished(res, () => {
+    const responseTime = Date.now() - req._startTime;
+    const method = req.method;
+    const url = req.originalUrl || req.url;
+    const status = res.statusCode;
+    const contentLength = res.get('content-length') || '-';
+    const userAgent = req.headers['user-agent'] || '-';
+    const referrer = req.headers.referrer || req.headers.referer || '-';
+    
+    // 获取请求体（包括multer处理后的数据）
+    let requestBody = '';
+    if (req.body && Object.keys(req.body).length > 0) {
+      const safeBody = { ...req.body };
+      // 过滤敏感信息
+      if (safeBody.password) safeBody.password = '***';
+      if (safeBody.secretKey) safeBody.secretKey = '***';
+      if (safeBody.secretId) safeBody.secretId = '***';
+      requestBody = ` | Body: ${JSON.stringify(safeBody)}`;
+    }
+    
+    // 获取文件信息（如果有）
+    let fileInfo = '';
+    if (req.file) {
+      fileInfo = ` | File: ${req.file.originalname} (${(req.file.size / 1024 / 1024).toFixed(2)}MB)`;
+    } else if (req.files && req.files.length > 0) {
+      const fileNames = req.files.map(f => f.originalname).join(', ');
+      const totalSize = req.files.reduce((sum, f) => sum + f.size, 0);
+      fileInfo = ` | Files: ${fileNames} (${(totalSize / 1024 / 1024).toFixed(2)}MB total)`;
+    }
+    
+    // 获取客户端 IP
+    const clientIp = req.headers['x-forwarded-for'] || 
+                    req.headers['x-real-ip'] || 
+                    req.connection.remoteAddress || 
+                    req.ip;
+    
+    const logMessage = `${method} ${url} - ${status} - ${responseTime}ms - ${contentLength}B | IP: ${clientIp} | UA: ${userAgent} | Ref: ${referrer}${requestBody}${fileInfo}`;
+    
+    // 根据状态码决定日志级别
+    if (status >= 500) {
+      logger.error(logMessage);
+    } else if (status >= 400) {
+      logger.warn(logMessage);
+    } else {
+      logger.http(logMessage);
+    }
+  });
+  
+  next();
+};
+
+// 保留原来的 Morgan 中间件（注释掉）
+/*
+const requestLoggerOld = morgan(
   function (tokens, req, res) {
     const method = tokens.method(req, res);
     const url = tokens.url(req, res);
@@ -12,9 +71,11 @@ const requestLogger = morgan(
     const userAgent = tokens['user-agent'](req, res);
     const referrer = tokens.referrer(req, res) || '-';
     
-    // 获取请求体（排除文件上传）
+    // 获取请求体
     let requestBody = '';
-    if (req.body && Object.keys(req.body).length > 0 && !req.file) {
+    // 对于multipart/form-data请求，body和file可能还未被解析
+    // 我们将在响应时记录这些信息
+    if (req.body && Object.keys(req.body).length > 0) {
       const safeBody = { ...req.body };
       // 过滤敏感信息
       if (safeBody.password) safeBody.password = '***';
@@ -52,6 +113,7 @@ const requestLogger = morgan(
     },
   }
 );
+*/
 
 // 响应拦截器 - 记录响应数据
 export const responseLogger = (req, res, next) => {

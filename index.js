@@ -100,7 +100,7 @@ app.use((req, res, next) => {
 // 设置上传文件的目录为静态资源
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
-// 添加请求日志中间件（在body解析之后）
+// 添加请求日志中间件（在body解析之后，路由之前）
 app.use(requestLogger)
 app.use(responseLogger)
 
