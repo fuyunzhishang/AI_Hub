@@ -11,7 +11,7 @@ services:
       - uploads_data:/app/uploads
       - logs_data:/app/logs
     env_file:
-      - ./.env
+      - ./production.env
     environment:
       - NODE_ENV=production
       - PORT=3099

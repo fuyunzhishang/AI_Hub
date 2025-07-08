@@ -325,10 +325,11 @@ class TTSService {
       const ai = new GoogleGenAI({ apiKey })
 
       // 构建合成请求
-      const promptText = stylePrompt 
-        ? `${stylePrompt},Say in ${voiceId} voice: ${text}`
-        : `正常语速和音量,清晰,Say in ${voiceId} voice: ${text}`
-      
+      // Google Gemini TTS需要使用英文指令，且格式要符合模型期望
+      const promptText = stylePrompt
+        ? `${stylePrompt}: ${text}`
+        : `Say this clearly: ${text}`
+
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash-preview-tts",
         contents: [{

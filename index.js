@@ -21,7 +21,10 @@ import logger from './utils/logger.js'
 import requestLogger, { responseLogger } from './middleware/requestLogger.js'
 
 // 加载环境变量
-dotenv.config()
+const environment = process.env.NODE_ENV || 'development'
+const envFile = environment === 'production' ? 'production.env' : 'development.env'
+dotenv.config({ path: envFile })
+console.log(`Loading environment from ${envFile}`)
 
 // 获取当前文件的目录路径
 const __filename = fileURLToPath(import.meta.url)

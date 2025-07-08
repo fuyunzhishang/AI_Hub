@@ -41,6 +41,9 @@ COPY --from=builder /app/node_modules ./node_modules
 # 复制应用代码
 COPY --chown=nodejs:nodejs . .
 
+# 复制生产环境配置文件（如果存在）
+COPY --chown=nodejs:nodejs production.env* ./
+
 # 创建必要的目录并设置权限
 RUN mkdir -p uploads uploads/voice public logs && \
     chown -R nodejs:nodejs uploads public logs && \
@@ -52,6 +55,8 @@ USER nodejs
 # 设置环境变量
 ENV NODE_ENV=production
 ENV PORT=3099
+
+# 注意：其他环境变量将通过 docker-compose.yml 的 env_file 加载
 
 # 暴露端口
 EXPOSE 3099

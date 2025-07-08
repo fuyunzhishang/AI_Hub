@@ -22,7 +22,8 @@
       "Bash(true)",
       "WebFetch(domain:node.cool-admin.com)",
       "Bash(awk:*)",
-      "Bash(docker exec:*)"
+      "Bash(docker exec:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }
