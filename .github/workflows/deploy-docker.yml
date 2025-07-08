@@ -107,17 +107,26 @@ jobs:
           EOF
           fi
           
+          # 检测 Docker Compose 命令
+          if command -v docker-compose &> /dev/null; then
+            DOCKER_COMPOSE_CMD="docker-compose"
+          elif docker compose version &> /dev/null; then
+            DOCKER_COMPOSE_CMD="docker compose"
+          else
+            echo "错误: 未找到 docker-compose 命令"
+            echo "请安装 docker-compose 或确保 Docker 版本支持 'docker compose' 子命令"
+            exit 1
+          fi
+          
+          echo "使用的 Docker Compose 命令: $DOCKER_COMPOSE_CMD"
+          
           # 停止旧容器
           echo "停止旧容器..."
-          docker-compose down || docker compose down || true
+          cd ${APP_DIR} && $DOCKER_COMPOSE_CMD down || true
           
           # 启动新容器
           echo "启动新容器..."
-          if command -v docker-compose &> /dev/null; then
-            docker-compose up -d
-          else
-            docker compose up -d
-          fi
+          cd ${APP_DIR} && $DOCKER_COMPOSE_CMD up -d
           
           # 等待容器启动
           echo "等待服务启动..."

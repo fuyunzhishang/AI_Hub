@@ -385,7 +385,7 @@ class TTSService {
    * Microsoft API TTS implementation (using external API)
    */
   async microsoftApiTTS(params) {
-    const { text, voiceId, speed = 1.0, pitch = 1.0, volume = 1.0, format = 'mp3' } = params
+    const { text, voiceId, speed = 1.0, volume = 1.0 } = params
 
     if (!text || !voiceId) {
       throw new Error('Text and voiceId are required')
