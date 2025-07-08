@@ -19,7 +19,8 @@
       "WebFetch(domain:ai.google.dev)",
       "Bash(rg:*)",
       "Bash(pkill:*)",
-      "Bash(true)"
+      "Bash(true)",
+      "WebFetch(domain:node.cool-admin.com)"
     ],
     "deny": []
   }

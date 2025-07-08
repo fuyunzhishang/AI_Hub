@@ -139,6 +139,10 @@ export const getVoices = async (req, res) => {
  *                 enum: [mp3, wav, ogg, webm]
  *                 default: mp3
  *                 description: 输出格式
+ *               stylePrompt:
+ *                 type: string
+ *                 description: 语音风格提示词（仅Google GenAI支持）
+ *                 example: "活泼有趣,语速稍快,带有笑意"
  *     responses:
  *       200:
  *         description: 成功生成语音
@@ -175,7 +179,7 @@ export const getVoices = async (req, res) => {
  */
 export const synthesizeSpeech = async (req, res) => {
   try {
-    const { provider = 'microsoft', text, voiceId, speed = 1.0, pitch = 1.0, volume = 1.0, format = 'mp3' } = req.body
+    const { provider = 'microsoft', text, voiceId, speed = 1.0, pitch = 1.0, volume = 1.0, format = 'mp3', stylePrompt } = req.body
 
     // 参数验证
     if (!text || !voiceId) {
@@ -200,7 +204,8 @@ export const synthesizeSpeech = async (req, res) => {
       speed,
       pitch,
       volume,
-      format
+      format,
+      stylePrompt
     })
 
     res.json(result)

@@ -115,7 +115,7 @@ class TTSService {
    * 合成语音
    */
   async synthesize(params) {
-    const { provider = 'microsoft', text, voiceId, speed = 1.0, pitch = 1.0, volume = 1.0, format = 'mp3' } = params
+    const { provider = 'microsoft', text, voiceId, speed = 1.0, pitch = 1.0, volume = 1.0, format = 'mp3', stylePrompt } = params
 
     if (!this.providers[provider]) {
       throw new Error(`Unsupported TTS provider: ${provider}`)
@@ -127,7 +127,8 @@ class TTSService {
       speed,
       pitch,
       volume,
-      format
+      format,
+      stylePrompt
     })
   }
 
@@ -307,7 +308,7 @@ class TTSService {
    * Google TTS implementation using Gemini AI
    */
   async googleTTS(params) {
-    const { text, voiceId, speed, pitch, volume, format } = params
+    const { text, voiceId, speed, pitch, volume, format, stylePrompt } = params
 
     // 验证必需的环境变量
     const apiKey = process.env.GOOGLE_API_KEY
@@ -324,11 +325,15 @@ class TTSService {
       const ai = new GoogleGenAI({ apiKey })
 
       // 构建合成请求
+      const promptText = stylePrompt 
+        ? `${stylePrompt},Say in ${voiceId} voice: ${text}`
+        : `正常语速和音量,清晰,Say in ${voiceId} voice: ${text}`
+      
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash-preview-tts",
         contents: [{
           parts: [{
-            text: `正常语速和音量,清晰,Say in ${voiceId} voice: ${text}`
+            text: promptText
           }]
         }],
         config: {
