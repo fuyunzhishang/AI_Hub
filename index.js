@@ -16,6 +16,7 @@ import authVideoRoutes from './routes/authVideo.js'
 import videoUnderstandingRoutes from './routes/videoUnderstandingRoutes.js'
 import voiceRouter from './routes/voice.js'
 import ttsRoutes from './routes/tts.js'
+import geminiRoutes from './routes/gemini.js'
 import tencentcloud from "tencentcloud-sdk-nodejs"
 import logger from './utils/logger.js'
 import requestLogger, { responseLogger } from './middleware/requestLogger.js'
@@ -127,6 +128,7 @@ app.use('/api/digital-human', digitalHumanRoutes)
 app.use('/api/auth-video', authVideoRoutes)
 app.use('/api/video-understanding', videoUnderstandingRoutes)
 app.use('/api/tts', ttsRoutes)
+app.use('/api/gemini', geminiRoutes)
 
 /**
  * @swagger
