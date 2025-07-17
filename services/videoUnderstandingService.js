@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleAIFileManager } from '@google/generative-ai/server';
 import { promises as fs } from 'fs';
 import { createWriteStream } from 'fs';
 import ffmpeg from 'fluent-ffmpeg';
@@ -7,20 +8,44 @@ import axios from 'axios';
 
 class VideoUnderstandingService {
   constructor() {
-    this.apiKey = process.env.GOOGLE_API_KEY;
-    if (!this.apiKey) {
-      console.warn('GOOGLE_API_KEY not found in environment variables');
+    this.genAI = null;
+    this.fileManager = null;
+  }
+
+  getApiKey() {
+    if (!this._apiKey) {
+      this._apiKey = process.env.GOOGLE_API_KEY;
+      if (!this._apiKey) {
+        console.warn('GOOGLE_API_KEY not found in environment variables');
+      }
     }
-    this.genAI = this.apiKey ? new GoogleGenerativeAI(this.apiKey) : null;
+    return this._apiKey;
+  }
+
+  getGenAI() {
+    const apiKey = this.getApiKey();
+    if (!this.genAI && apiKey) {
+      this.genAI = new GoogleGenerativeAI(apiKey);
+    }
+    return this.genAI;
+  }
+
+  getFileManager() {
+    const apiKey = this.getApiKey();
+    if (!this.fileManager && apiKey) {
+      this.fileManager = new GoogleAIFileManager(apiKey);
+    }
+    return this.fileManager;
   }
 
   async analyzeVideo(videoSource, prompt, samplingRate = 1) {
-    if (!this.genAI) {
+    const genAI = this.getGenAI();
+    if (!genAI) {
       throw new Error('Google API key not configured. Please set GOOGLE_API_KEY environment variable.');
     }
 
     try {
-      const model = this.genAI.getGenerativeModel({
+      const model = genAI.getGenerativeModel({
         model: 'gemini-2.5-flash'
       });
 
@@ -71,7 +96,7 @@ class VideoUnderstandingService {
         },
       });
 
-      const response = await result.response;
+      const response = result.response;
       return {
         text: response.text(),
         videoSource: videoSource.type,
@@ -85,13 +110,12 @@ class VideoUnderstandingService {
   }
 
   async uploadLargeVideo(filePath, mimeType) {
-    if (!this.genAI) {
+    const fileManager = this.getFileManager();
+    if (!fileManager) {
       throw new Error('Google API key not configured');
     }
 
     try {
-      const fileManager = this.genAI.getFileManager();
-
       const uploadResponse = await fileManager.uploadFile(filePath, {
         mimeType: mimeType,
         displayName: path.basename(filePath),
